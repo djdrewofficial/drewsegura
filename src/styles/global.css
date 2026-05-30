@@ -541,6 +541,70 @@ textarea.input { resize: vertical; min-height: 84px; }
 .welcome { display: inline-flex; align-items: center; gap: 8px; }
 .welcome .flag { width: 26px; height: 16px; border-radius: 3px; background: linear-gradient(90deg,#e40303,#ff8c00,#ffed00,#008026,#004dff,#750787); }
 
+/* ---------- about / story page ---------- */
+.page-hero { padding-block: clamp(40px, 6vw, 80px) clamp(28px, 4vw, 48px); }
+.page-hero__grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(28px, 4vw, 56px); align-items: end; }
+.page-hero h1 { margin-block: 16px 20px; }
+.bigfacts { display: flex; flex-wrap: wrap; gap: 10px 28px; padding-top: 22px; border-top: 2px solid var(--ink); }
+.bigfacts .trust-item b { font-size: 1.7rem; }
+
+/* chapter timeline */
+.story { position: relative; }
+.chapter {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: clamp(26px, 4vw, 60px);
+  align-items: center;
+  padding-block: clamp(40px, 6vw, 80px);
+  border-top: 2px solid var(--ink);
+  position: relative;
+}
+.chapter:nth-child(even) .chapter__media { order: 2; }
+.chapter__tag {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 0.74rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--pine);
+  margin-bottom: 14px;
+}
+.chapter__tag .trk { background: var(--ink); color: var(--cream); padding: 3px 9px; border-radius: 5px; letter-spacing: 0.1em; }
+.chapter h2 { font-size: clamp(1.9rem, 4.4vw, 3.2rem); margin-bottom: 18px; line-height: 0.96; }
+.chapter__body { display: grid; gap: 14px; }
+.chapter__body p { font-size: 1.04rem; }
+.chapter__body .lead { font-size: clamp(1.08rem, 1.6vw, 1.28rem); color: var(--ink); }
+.chapter__pull {
+  font-family: var(--font-display); font-weight: 800; font-size: 1.15rem;
+  color: var(--ink); border-left: 4px solid var(--tangerine);
+  padding: 4px 0 4px 16px; margin-top: 6px; line-height: 1.25; letter-spacing: -0.01em;
+}
+.namedrop { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.namedrop .tag { color: var(--ink); border-color: var(--line-2); }
+
+/* values strip */
+.values { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.value { border: 2px solid var(--ink); border-radius: 12px; background: var(--paper-2); box-shadow: var(--shadow); padding: 22px 20px; display: grid; gap: 8px; align-content: start; }
+.value .vno { font-family: var(--font-mono); font-size: 0.74rem; color: var(--tangerine); letter-spacing: 0.08em; }
+.value h3 { font-size: 1.15rem; }
+.value p { font-size: 0.94rem; color: var(--ink-soft); }
+
+/* big closing CTA band */
+.band { background: var(--tangerine); color: var(--cream); border-block: 2px solid var(--ink); }
+.band__inner { display: grid; gap: 20px; justify-items: center; text-align: center; padding-block: clamp(48px, 7vw, 88px); }
+.band h2 { color: var(--cream); font-size: clamp(2rem, 5vw, 3.6rem); }
+.band p { color: rgba(246,238,226,0.92); max-width: 50ch; }
+.band .btn--primary { background: var(--ink); color: var(--cream); }
+.band .btn { background: transparent; color: var(--cream); border-color: var(--cream); box-shadow: 4px 4px 0 rgba(27,23,20,0.6); }
+
+@media (max-width: 880px) {
+  .page-hero__grid { grid-template-columns: 1fr; }
+  .chapter { grid-template-columns: 1fr; }
+  .chapter:nth-child(even) .chapter__media { order: 0; }
+  .chapter__media { margin-bottom: 6px; }
+  .values { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .values { grid-template-columns: 1fr; }
+}
+
 /* ---------- placeholder component support ---------- */
 .ph {
   position: relative; width: 100%; background: var(--paper-3);
@@ -555,16 +619,17 @@ textarea.input { resize: vertical; min-height: 84px; }
 .ph--solid { border-style: solid; }
 
 /* ---------- reveal animation (clip-wipe, not the usual fade-up) ---------- */
-[data-reveal] {
+/* Only hide-for-reveal once JS confirms it can un-hide. No-JS users & crawlers see everything. */
+.js [data-reveal] {
   clip-path: inset(0 0 14% 0);
   opacity: 0;
   transform: translateY(18px);
   transition: clip-path 0.7s var(--ease), opacity 0.6s var(--ease), transform 0.7s var(--ease);
 }
-[data-reveal].is-in { clip-path: inset(0 0 0 0); opacity: 1; transform: none; }
-[data-reveal][data-d="1"] { transition-delay: 0.08s; }
-[data-reveal][data-d="2"] { transition-delay: 0.16s; }
-[data-reveal][data-d="3"] { transition-delay: 0.24s; }
+.js [data-reveal].is-in { clip-path: inset(0 0 0 0); opacity: 1; transform: none; }
+.js [data-reveal][data-d="1"] { transition-delay: 0.08s; }
+.js [data-reveal][data-d="2"] { transition-delay: 0.16s; }
+.js [data-reveal][data-d="3"] { transition-delay: 0.24s; }
 
 /* confetti easter-egg canvas */
 #confetti { position: fixed; inset: 0; z-index: 99; pointer-events: none; }

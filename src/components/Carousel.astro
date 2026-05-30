@@ -1,0 +1,129 @@
+---
+import Placeholder from "./Placeholder.astro";
+
+interface Slide {
+  w: number;
+  h: number;
+  label: string;
+  file?: string;
+  caption?: string;
+}
+interface Props {
+  slides: Slide[];
+  id: string;
+  rounded?: string;
+}
+const { slides, id, rounded = "14px" } = Astro.props;
+---
+<div class="carousel" data-carousel id={id} style={`--r:${rounded}`}>
+  <div class="carousel__viewport">
+    <div class="carousel__track" data-track>
+      {slides.map((s, i) => (
+        <figure class="carousel__slide" data-slide aria-hidden={i !== 0 ? "true" : "false"}>
+          <Placeholder w={s.w} h={s.h} label={s.label} file={s.file} rounded={rounded} solid />
+          {s.caption && <figcaption class="carousel__cap mono">{s.caption}</figcaption>}
+        </figure>
+      ))}
+    </div>
+
+    {slides.length > 1 && (
+      <>
+        <button class="carousel__arrow carousel__arrow--prev" data-prev aria-label="Previous photo">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="carousel__arrow carousel__arrow--next" data-next aria-label="Next photo">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="carousel__counter mono" data-counter>1 / {slides.length}</span>
+      </>
+    )}
+  </div>
+
+  {slides.length > 1 && (
+    <div class="carousel__dots" role="tablist" aria-label="Choose photo">
+      {slides.map((_, i) => (
+        <button class="carousel__dot" data-dot={String(i)} aria-label={`Go to photo ${i + 1}`} aria-selected={i === 0 ? "true" : "false"}></button>
+      ))}
+    </div>
+  )}
+</div>
+
+<style>
+  .carousel { position: relative; }
+  .carousel__viewport { position: relative; overflow: hidden; border-radius: var(--r); border: 2px solid var(--ink); box-shadow: var(--shadow); background: var(--paper-2); }
+  .carousel__track { display: flex; transition: transform 0.5s var(--ease); }
+  .carousel__slide { flex: 0 0 100%; margin: 0; position: relative; }
+  .carousel__slide .ph { border: 0 !important; box-shadow: none; }
+  .carousel__cap {
+    position: absolute; left: 12px; bottom: 12px;
+    background: var(--ink); color: var(--cream);
+    font-size: 0.7rem; letter-spacing: 0.04em;
+    padding: 6px 11px; border-radius: 6px;
+  }
+  .carousel__arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; display: grid; place-items: center;
+    background: var(--paper); color: var(--ink);
+    border: 2px solid var(--ink); border-radius: 50%; box-shadow: 3px 3px 0 var(--ink);
+    transition: transform 0.14s var(--ease), background 0.18s; z-index: 3;
+  }
+  .carousel__arrow svg { width: 19px; }
+  .carousel__arrow:hover { background: var(--tangerine); color: var(--cream); }
+  .carousel__arrow--prev { left: 12px; }
+  .carousel__arrow--next { right: 12px; }
+  .carousel__arrow--prev:hover { transform: translateY(-50%) translateX(-2px); }
+  .carousel__arrow--next:hover { transform: translateY(-50%) translateX(2px); }
+  .carousel__counter {
+    position: absolute; right: 12px; top: 12px; z-index: 3;
+    background: var(--ink); color: var(--cream); font-size: 0.68rem;
+    padding: 5px 10px; border-radius: 999px; letter-spacing: 0.06em;
+  }
+  .carousel__dots { display: flex; gap: 8px; justify-content: center; margin-top: 16px; }
+  .carousel__dot {
+    width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--ink);
+    background: var(--paper); transition: background 0.18s, transform 0.14s var(--ease);
+  }
+  .carousel__dot[aria-selected="true"] { background: var(--tangerine); transform: scale(1.15); }
+</style>
+
+<script>
+  function initCarousels() {
+    document.querySelectorAll<HTMLElement>("[data-carousel]").forEach((root) => {
+      if (root.dataset.init === "1") return;
+      root.dataset.init = "1";
+      const track = root.querySelector<HTMLElement>("[data-track]");
+      const slides = root.querySelectorAll<HTMLElement>("[data-slide]");
+      const dots = root.querySelectorAll<HTMLElement>("[data-dot]");
+      const counter = root.querySelector<HTMLElement>("[data-counter]");
+      const total = slides.length;
+      if (!track || total < 2) return;
+      let i = 0;
+      const go = (n: number) => {
+        i = (n + total) % total;
+        track.style.transform = `translateX(-${i * 100}%)`;
+        if (counter) counter.textContent = `${i + 1} / ${total}`;
+        dots.forEach((d, di) => d.setAttribute("aria-selected", String(di === i)));
+        slides.forEach((s, si) => s.setAttribute("aria-hidden", String(si !== i)));
+      };
+      root.querySelector("[data-prev]")?.addEventListener("click", () => go(i - 1));
+      root.querySelector("[data-next]")?.addEventListener("click", () => go(i + 1));
+      dots.forEach((d, di) => d.addEventListener("click", () => go(di)));
+      // keyboard
+      root.addEventListener("keydown", (e: KeyboardEvent) => {
+        if (e.key === "ArrowLeft") go(i - 1);
+        if (e.key === "ArrowRight") go(i + 1);
+      });
+      // basic swipe
+      let x0: number | null = null;
+      root.addEventListener("touchstart", (e) => (x0 = e.touches[0].clientX), { passive: true });
+      root.addEventListener("touchend", (e) => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 40) go(dx < 0 ? i + 1 : i - 1);
+        x0 = null;
+      });
+    });
+  }
+  initCarousels();
+  document.addEventListener("astro:after-swap", initCarousels);
+</script>

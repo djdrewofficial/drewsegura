@@ -1,0 +1,195 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import Placeholder from "../components/Placeholder.astro";
+import Carousel from "../components/Carousel.astro";
+import Record from "../components/Record.astro";
+
+const chapters = [
+  {
+    trk: "TRACK 01",
+    tag: "How it started",
+    title: "A DJ Hero game and a 13-year-old who wouldn't put the controller down.",
+    pull: "Turns out the toy turntable was just the first set of decks.",
+    slides: [
+      { w: 1100, h: 1000, label: "Young Drew on his first DJ controller, backyard setup", file: "story-13-djhero.jpg", caption: "Where it all started" },
+      { w: 1100, h: 1000, label: "Early bedroom / backyard practice rig", file: "story-first-rig.jpg", caption: "Hours of practice" },
+    ],
+    body: [
+      { lead: true, t: "I started DJ'ing at 13, right after I got DJ Hero for my birthday. It started as something fun — then it pretty much took over." },
+      { t: "Not long after, I got my first real DJ controller and started teaching myself how to mix. I'd spend hours practicing transitions and figuring out how to actually move a crowd long before I ever stood in front of one." },
+    ],
+    names: [],
+  },
+  {
+    trk: "TRACK 02",
+    tag: "Finding an audience",
+    title: "I learned to read a room through a screen — to thousands of people at once.",
+    pull: "A webcam taught me crowd control before a dance floor ever did.",
+    slides: [
+      { w: 1100, h: 1000, label: "Drew live-streaming a DJ set on YouNow", file: "story-younow.jpg", caption: "Building an audience online" },
+    ],
+    body: [
+      { t: "Eventually I started live-streaming my sets on a platform called YouNow, and that's where things really shifted. I built a following and became one of the top creators on there for a while." },
+      { t: "Even though it was through a screen, it was real experience — real people reacting in real time. That led to my first paid gig DJ'ing private events at a banquet hall in Pompano Beach, where I started learning what it actually takes to keep a live crowd moving." },
+    ],
+    names: ["YouNow", "Pompano Beach"],
+  },
+  {
+    trk: "TRACK 03",
+    tag: "The nightlife years",
+    title: "Las Olas at 18. No setlist, no safety net — just reading the energy.",
+    pull: "Nightlife is where I learned to DJ without a plan and never lose the floor.",
+    slides: [
+      { w: 1100, h: 1000, label: "Drew DJ'ing at a Las Olas nightclub with mentor Frankie P", file: "story-lasolas.jpg", caption: "Vibe Las Olas · with Frankie P" },
+      { w: 1100, h: 1000, label: "Packed nightclub booth, lights down", file: "story-nightlife.jpg", caption: "Reading the room live" },
+    ],
+    body: [
+      { t: "At 18 I broke into nightlife, DJ'ing on Las Olas at spots like Vibe Las Olas and American Social alongside my good friend and mentor, Frankie P. That's where I really learned to read a crowd in real time — no set playlists, no structure, just reacting to the energy and keeping people moving." },
+      { t: "From there I started DJ'ing at LGBTQ venues across the country — The Manor, Scorpio, Rumors, Johnsons, Leboy — and I now hold my main weekly residency at Hunters Nightclub in Wilton Manors." },
+    ],
+    names: ["Vibe Las Olas", "American Social", "The Manor", "Scorpio", "Hunters · Wilton Manors"],
+  },
+  {
+    trk: "TRACK 04",
+    tag: "Building Xpress",
+    title: "In 2016 I bet on myself. It grew into a whole team.",
+    pull: "What started as just me turned into 150+ weddings a year across South Florida.",
+    slides: [
+      { w: 1100, h: 1000, label: "Drew behind the Xpress DJs facade booth, early days", file: "story-xpress-booth.jpg", caption: "Xpress DJs · the early days" },
+      { w: 1100, h: 1000, label: "Drew on the mic at a packed wedding reception", file: "story-wedding-mic.jpg", caption: "Where the passion landed" },
+    ],
+    body: [
+      { t: "In 2016 I started Xpress DJs. At the time it was just me, trying to take things seriously and turn what I loved into something real. I worked smaller events, learning how to run a timeline, work with couples, and build an experience instead of just playing music." },
+      { t: "Over time it grew — more bookings, bigger rooms, better nights. I started bringing on other DJs and built it into something bigger than myself. Today, Xpress Entertainment plays 150+ weddings a year across South Florida, with a reputation for real energy and packed dance floors." },
+      { t: "But weddings are the part I love most. That's where everything I learned — the streaming, the nightlife, the residencies — finally came together." },
+    ],
+    names: ["Xpress Entertainment", "Est. 2016"],
+  },
+];
+
+const values = [
+  { vno: "01", t: "Bilingual by nature", d: "Raised Dominican-American, fluent in English and Spanish. Both sides of your family get hyped in their own language." },
+  { vno: "02", t: "I read, I don't recite", d: "Years of nightlife with no setlist. I mix off the crowd in front of me, never off a pre-baked playlist." },
+  { vno: "03", t: "Genre has no borders", d: "Reggaetón into 2000s hip-hop into salsa into EDM — open-format mixing that keeps every generation on the floor." },
+  { vno: "04", t: "Weddings are the goal", d: "Clubs were the training. Your wedding is the main event, and it gets my full focus from 'I do' to last call." },
+];
+
+const aboutLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Drew Segura",
+  alternateName: "DJ Drew Segura",
+  jobTitle: "Wedding DJ & MC",
+  description: "Bilingual (English/Spanish) wedding DJ and MC serving Miami, Fort Lauderdale and South Florida. Founder of Xpress DJs / Xpress Entertainment.",
+  knowsLanguage: ["en", "es"],
+  worksFor: { "@type": "Organization", name: "Xpress Entertainment", url: "https://xpressdjs.com" },
+  areaServed: ["Miami, FL", "Fort Lauderdale, FL", "South Florida"],
+  sameAs: [
+    "https://instagram.com/djdrewofficial",
+    "https://tiktok.com/@djdrewofficiall",
+    "https://youtube.com/@djdrewofficial",
+  ],
+};
+---
+<Base
+  title="About DJ Drew Segura — Bilingual Miami & Fort Lauderdale Wedding DJ"
+  description="The story of DJ Drew Segura: from a DJ Hero game at 13 to Las Olas nightlife, LGBTQ residencies, and 150+ South Florida weddings a year. Bilingual EN/ES wedding DJ & MC in Miami and Fort Lauderdale."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(aboutLd)} slot="head" />
+  <Nav />
+  <main id="main">
+
+    <!-- intro -->
+    <header class="page-hero section--tight" id="top">
+      <div class="wrap page-hero__grid">
+        <div>
+          <p class="kicker">The long version · Side A → Side B</p>
+          <h1 class="display" style="font-size:clamp(2.6rem,7vw,5.4rem)" data-reveal>
+            From a DJ Hero game<br />to <span class="mark">your dance floor</span>.
+          </h1>
+          <p class="lead" data-reveal data-d="1">
+            I'm <strong>Drew Segura</strong>. I've been DJ'ing since I was thirteen — through living-room
+            practice sessions, late-night live streams, Las Olas clubs, and LGBTQ residencies across the
+            country. Every one of those rooms taught me the same thing: how to keep <em>real</em> people
+            dancing. Here's how a backyard hobby turned into 150+ South Florida weddings a year.
+          </p>
+          <div class="bigfacts" data-reveal data-d="2">
+            <div class="trust-item"><b>15+ yrs</b><span>behind the decks</span></div>
+            <div class="trust-item"><b>2016</b><span>founded Xpress DJs</span></div>
+            <div class="trust-item"><b>EN / ES</b><span>bilingual host</span></div>
+            <div class="trust-item"><b>Weekly</b><span>Hunters residency</span></div>
+          </div>
+        </div>
+        <div data-reveal data-d="1" style="display:grid;place-items:center">
+          <div style="width:min(78%,300px)"><Record side="SIDE A" title="THE ORIGIN" /></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- chapters -->
+    <section class="story">
+      {chapters.map((c) => (
+        <div class="wrap">
+          <article class="chapter">
+            <div class="chapter__media" data-reveal>
+              <Carousel id={`car-${c.trk.replace(/\s/g, "").toLowerCase()}`} slides={c.slides} />
+            </div>
+            <div class="chapter__text" data-reveal data-d="1">
+              <span class="chapter__tag"><span class="trk">{c.trk}</span> {c.tag}</span>
+              <h2>{c.title}</h2>
+              <div class="chapter__body">
+                {c.body.map((b) => <p class={b.lead ? "lead" : ""}>{b.t}</p>)}
+                {c.pull && <p class="chapter__pull">"{c.pull}"</p>}
+                {c.names.length > 0 && (
+                  <div class="namedrop">{c.names.map((n) => <span class="tag">{n}</span>)}</div>
+                )}
+              </div>
+            </div>
+          </article>
+        </div>
+      ))}
+    </section>
+
+    <!-- what I bring -->
+    <section class="section" style="border-top:2px solid var(--ink)">
+      <div class="wrap">
+        <div class="shead" data-reveal>
+          <div class="shead__top">
+            <h2 class="h-xl">What all of that<br />means for your night.</h2>
+            <span class="shead__side">The takeaway</span>
+          </div>
+        </div>
+        <div class="values">
+          {values.map((v, i) => (
+            <article class="value" data-reveal data-d={String(i % 3)}>
+              <span class="vno">{v.vno}</span>
+              <h3>{v.t}</h3>
+              <p>{v.d}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- closing band -->
+    <section class="band">
+      <div class="wrap band__inner" data-reveal>
+        <p class="kicker" style="color:var(--cream)">Your turn on the floor</p>
+        <h2>Let's make your wedding<br />the one people don't shut up about.</h2>
+        <p>Tell me your date, your venue, and your vibe. If I'm free, you'll get real pricing and zero pressure — from me, within 24 hours.</p>
+        <div class="btn-row" style="justify-content:center">
+          <a href="/#request" class="btn btn--primary">Check your date <span class="arr">→</span></a>
+          <a href="/#mixer" class="btn">Build your dance floor</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap" style="padding-block:34px;text-align:center">
+      <Placeholder w={1600} h={600} label="Drew + a packed wedding dance floor, wide crowd shot" file="about-closer-floor.jpg" rounded="14px" />
+    </div>
+
+  </main>
+  <Footer />
+</Base>
