@@ -1,0 +1,148 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { GENRES } from "../lib/site";
+---
+<Base
+  title="Build Your Dance Floor — DJ Drew Segura | Miami Wedding DJ"
+  description="Tap the genres your crowd actually moves to and see your wedding dance floor come to life. A fun, interactive preview of how bilingual Miami wedding DJ Drew Segura blends reggaetón, salsa, hip-hop and EDM in one night."
+>
+  <Nav />
+  <main id="main">
+    <header class="page-hero section--tight">
+      <div class="wrap">
+        <p class="kicker" data-reveal>Interactive · B-side bonus</p>
+        <h1 class="display" style="font-size:clamp(2.6rem,7vw,5.4rem);margin:16px 0 18px" data-reveal data-d="1">
+          build your<br /><span class="mark">dance floor</span>.
+        </h1>
+        <p class="lead" data-reveal data-d="2" style="max-width:60ch">
+          this is the part where you tell me who you are. tap every genre your crowd actually moves to and
+          watch the floor fill up in real time. i mix across all of it in one night — think of this as a
+          five-second preview of the chaos.
+        </p>
+      </div>
+    </header>
+
+    <section class="section--tight" style="padding-bottom:clamp(50px,7vw,90px)">
+      <div class="wrap">
+        <div class="mixer__panel" data-reveal>
+          <div class="mixer__bar">
+            <span>DREW-OS · floor mixer v1.0</span>
+            <span class="dots"><i></i><i></i><i></i></span>
+          </div>
+          <div class="mixer__body">
+            <div class="mixer__left">
+              <p class="kicker kicker--ink">pick your flavors</p>
+              <div class="chip-grid" id="chipGrid" role="group" aria-label="Choose genres">
+                {GENRES.map((g) => (
+                  <button class="chip" aria-pressed="false" data-genre={g}>{g}<span class="x" aria-hidden="true">✕</span></button>
+                ))}
+              </div>
+              <p class="note" style="margin-top:18px">pro tip: the more you pick, the more i get to show off</p>
+            </div>
+            <div class="mixer__right">
+              <div class="readout">
+                <span class="kicker kicker--ink">your set</span>
+                <span class="readout__name" id="setName">tap to start the mix</span>
+                <span class="readout__desc" id="setDesc">your floor's empty right now. pick a few genres and watch it fill up.</span>
+              </div>
+              <div class="meter">
+                <div class="meter__top"><span>crowd energy</span><span id="energyPct">0%</span></div>
+                <div class="meter__track"><div class="meter__fill" id="energyFill" style="width:0%"></div></div>
+              </div>
+              <div class="eq-wall" id="eqWall" aria-hidden="true">
+                {Array.from({ length: 16 }).map(() => <i></i>)}
+              </div>
+              <a href="/check-availability" class="btn btn--primary" id="lockBtn" style="justify-content:center">lock in this vibe → check your date</a>
+            </div>
+          </div>
+        </div>
+
+        <p class="lead" data-reveal style="margin-top:40px;max-width:62ch">
+          for real though — this is genuinely how i think about your wedding. i'm not picking one lane and
+          staying in it. i'm watching which of these lights up your specific crowd and threading all of it
+          together live so your tía, your coworkers and your college roommates are all on the floor at the
+          same time. that's the entire job.
+        </p>
+      </div>
+    </section>
+
+    <CtaBand kicker="you built it — now book it" heading="like the sound of that floor? let's make it real." />
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  const grid = document.getElementById("chipGrid");
+  const setName = document.getElementById("setName");
+  const setDesc = document.getElementById("setDesc");
+  const energyPct = document.getElementById("energyPct");
+  const energyFill = document.getElementById("energyFill") as HTMLElement | null;
+  const eqWall = document.getElementById("eqWall");
+  const lockBtn = document.getElementById("lockBtn") as HTMLAnchorElement | null;
+
+  const LATIN = ["Salsa", "Merengue", "Bachata", "Cumbia"];
+  const GLOBAL = ["Reggaetón", "Afrobeats", "Amapiano"];
+  const RETRO = ["2000s Hip-Hop", "Throwbacks", "Freestyle"];
+  const PEAK = ["EDM / House", "Pop Anthems"];
+  const has = (arr: string[], set: Set<string>) => arr.some((x) => set.has(x));
+
+  function nameFor(set: Set<string>): string {
+    const parts: string[] = [];
+    if (has(LATIN, set)) parts.push("Latin");
+    if (has(GLOBAL, set)) parts.push("Global");
+    if (has(RETRO, set)) parts.push("Throwback");
+    if (has(PEAK, set)) parts.push("Peak-Time");
+    if (parts.length === 0) return "tap to start the mix";
+    if (parts.length >= 3) return "The Multicultural Madhouse";
+    return `The ${parts.join(" / ")} Mix`;
+  }
+  function descFor(set: Set<string>): string {
+    const n = set.size;
+    if (n === 0) return "your floor's empty right now. pick a few genres and watch it fill up.";
+    if (n === 1) return "solid start — but my whole thing is the blend. add a couple more.";
+    const bits: string[] = [];
+    if (has(LATIN, set)) bits.push("tía's already on the floor");
+    if (has(GLOBAL, set)) bits.push("the global section is unhinged");
+    if (has(RETRO, set)) bits.push("everyone's screaming the words");
+    if (has(PEAK, set)) bits.push("the after-party crew is sweating");
+    if (n >= 6) return "certified chaos. this is the exact crossover i live for — nobody sits down, nobody agrees on a genre, everybody dances.";
+    return `now we're talking — ${bits.slice(0, 3).join(", ")}. i thread all of it together live.`;
+  }
+  function paintEq(energy: number) {
+    if (!eqWall) return;
+    eqWall.querySelectorAll("i").forEach((b) => {
+      const base = energy / 100;
+      const h = Math.max(8, Math.min(100, (base * 70 + Math.random() * 45) * (0.5 + base)));
+      (b as HTMLElement).style.height = `${h}%`;
+    });
+  }
+  let eqTimer: ReturnType<typeof setInterval> | null = null;
+  function update() {
+    if (!grid) return;
+    const set = new Set<string>(
+      Array.from(grid.querySelectorAll('.chip[aria-pressed="true"]')).map((c) => (c as HTMLElement).dataset.genre as string)
+    );
+    const energy = set.size === 0 ? 0 : Math.min(100, 32 + set.size * 8);
+    if (setName) setName.textContent = nameFor(set);
+    if (setDesc) setDesc.textContent = descFor(set);
+    if (energyPct) energyPct.textContent = `${energy}%`;
+    if (energyFill) energyFill.style.width = `${energy}%`;
+    if (lockBtn) {
+      const picks = Array.from(set);
+      lockBtn.href = picks.length ? `/check-availability?vibe=${encodeURIComponent(picks.join(", "))}` : "/check-availability";
+    }
+    paintEq(energy);
+    if (eqTimer) clearInterval(eqTimer);
+    if (set.size > 0) eqTimer = setInterval(() => paintEq(energy), 360);
+    else if (eqWall) eqWall.querySelectorAll("i").forEach((b) => ((b as HTMLElement).style.height = "30%"));
+  }
+  grid?.addEventListener("click", (e) => {
+    const chip = (e.target as HTMLElement).closest(".chip") as HTMLElement | null;
+    if (!chip) return;
+    chip.setAttribute("aria-pressed", chip.getAttribute("aria-pressed") === "true" ? "false" : "true");
+    update();
+  });
+</script>

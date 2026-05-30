@@ -31,28 +31,49 @@ Node 18.20+ / 20.3+ / 22+ recommended.
 
 ## Before launch — replace these
 
-1. **Photos.** Every image is a sized `<Placeholder>` showing the exact px dimensions + a suggested filename. Drop real photos into `public/images/` and swap the `<Placeholder>` for an `<img>`. Priority shots: Drew portrait (900×1100), gallery dance-floor moments, couple avatars.
-2. **Testimonials.** The three couples in `src/pages/index.astro` (`couples` array) are **placeholder copy** — replace with real, verified reviews (and real names/venues with permission).
-3. **Lead form.** The `#leadForm` posts to `https://formspree.io/f/REPLACE_ME`. Create a free [Formspree](https://formspree.io) form (or your own endpoint) and paste the real action URL. Until then the form shows the success state but does **not** deliver. Leads can also text 954·233·0698.
+1. **Photos.** Every image is a sized `<Placeholder>` showing the exact px dimensions + a suggested filename. Drop real photos into `public/images/` and swap the `<Placeholder>` for an `<img>`. Priority shots: Drew portrait (900×1100), the four story photos for `/about`, the `/weddings` per-service shots, gallery moments, couple avatars.
+2. **Testimonials.** The reviews live in `src/lib/site.ts` (`REVIEWS`) and are **placeholder copy** — replace with real, verified reviews (real names/venues with permission).
+3. **Lead form.** `src/pages/check-availability.astro` posts to `https://formspree.io/f/REPLACE_ME`. Create a free [Formspree](https://formspree.io) form (or your own endpoint) and paste the real action URL. Until then the form shows the success state but does **not** deliver. Leads can also text 954·233·0698. (The Build-Your-Floor mixer passes the chosen vibe through to this form via `?vibe=`.)
 4. **Domain.** Set the real domain in `astro.config.mjs` (`site`) and in `public/robots.txt`.
-5. **OG image.** `public/og.svg` is a branded share card. For best compatibility on every platform, export it to a 1200×630 `og.png` and point `ogImage` (in `Base.astro`) at it.
-6. **Real numbers.** Stats (150 weddings/yr, 100+ reviews, etc.) come from the Xpress profile — confirm before publishing.
+5. **OG image.** `public/og.svg` is a branded share card. For best compatibility, export it to a 1200×630 `og.png` and point `ogImage` (in `Base.astro`) at it.
+6. **Real numbers.** Stats (150 weddings/yr, 100+ reviews, 15 yrs) come from the Xpress profile / Drew's story — confirm before publishing.
+7. **Audio rights.** `public/audio/drew-salsa-60.mp3` is a stock salsa loop from your Downloads. Confirm it's cleared for web use, or swap in one of Drew's own mixes.
 
 ## Structure
 
+Multipage site — every nav item is a real, SEO-targeted page.
+
 ```
 src/
-  layouts/Base.astro        # <head>, SEO/OG, fonts, LocalBusiness JSON-LD
+  layouts/Base.astro        # <head>, SEO/OG, fonts, JSON-LD, site-wide reveal
+  lib/site.ts               # SINGLE SOURCE OF TRUTH: contact, socials, nav,
+                            #   venues, genres, tracklist, reviews, FAQs
   components/
     Nav.astro  Footer.astro
+    Turntable.astro         # spinning vinyl + CLICK-TO-PLAY salsa track
+    Record.astro            # vinyl SVG  ·  Equalizer.astro  ·  Carousel.astro
+    CtaBand.astro           # reusable closing call-to-action band
     Placeholder.astro       # sized image placeholders
-    Record.astro            # spinning vinyl SVG
-    Equalizer.astro         # animated EQ bars
   pages/
-    index.astro             # the whole one-page experience + all JS
+    index.astro             # expanded homepage (hero → teasers for each page)
+    weddings.astro          # /weddings  — full "the set" service deep-dive
+    about.astro             # /about     — Drew's story in chapters + carousels
+    build-your-floor.astro  # /build-your-floor — interactive genre mixer
+    reviews.astro           # /reviews   — testimonials + Review schema
+    faq.astro               # /faq       — FAQ + FAQPage schema
+    check-availability.astro# /check-availability — the lead-capture form
     404.astro
   styles/global.css         # the entire design system
+public/audio/               # drew-salsa-60.mp3 (click-to-play), -15.mp3
 ```
+
+### The turntable (hero + 404)
+`Turntable.astro` spins the record via `requestAnimationFrame` (decoupled
+from scroll, so it never skips), and **plays/pauses a salsa clip when the
+record is clicked**. It speeds up while playing, only one track plays at a
+time, and it pauses when you leave the tab. Respects `prefers-reduced-motion`.
+To change the song, drop a file in `public/audio/` and pass `track=` to the
+component.
 
 ## Contact (real)
 

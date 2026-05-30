@@ -1,0 +1,23 @@
+---
+interface Props {
+  kicker?: string;
+  heading?: string;
+  text?: string;
+}
+const {
+  kicker = "Your turn on the floor",
+  heading = "let's make your wedding the one people don't shut up about",
+  text = "tell me your date, your venue, and your vibe. if i'm free you'll get real pricing and zero pressure — from me, within 24 hours.",
+} = Astro.props;
+---
+<section class="band">
+  <div class="wrap band__inner" data-reveal>
+    <p class="kicker" style="color:var(--cream)">{kicker}</p>
+    <h2 set:html={heading} />
+    <p>{text}</p>
+    <div class="btn-row" style="justify-content:center">
+      <a href="/check-availability" class="btn btn--primary">Check your date <span class="arr">→</span></a>
+      <a href="/build-your-floor" class="btn">Build your dance floor</a>
+    </div>
+  </div>
+</section>

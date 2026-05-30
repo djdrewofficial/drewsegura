@@ -1,0 +1,76 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import Placeholder from "../components/Placeholder.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { REVIEWS } from "../lib/site";
+
+const reviewLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "DJ Drew Segura",
+  aggregateRating: { "@type": "AggregateRating", ratingValue: "5.0", reviewCount: "100" },
+  review: REVIEWS.map((r) => ({
+    "@type": "Review",
+    reviewRating: { "@type": "Rating", ratingValue: "5" },
+    author: { "@type": "Person", name: r.n },
+    reviewBody: r.q,
+  })),
+};
+---
+<Base
+  title="Reviews — DJ Drew Segura | Miami & Fort Lauderdale Wedding DJ"
+  description="100+ five-star reviews from South Florida couples. Read what real Miami & Fort Lauderdale newlyweds say about bilingual wedding DJ Drew Segura and his packed dance floors."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(reviewLd)} slot="head" />
+  <Nav />
+  <main id="main">
+    <header class="page-hero section--tight">
+      <div class="wrap">
+        <p class="kicker" data-reveal>Admit Two · ★★★★★</p>
+        <h1 class="display" style="font-size:clamp(2.6rem,7vw,5.4rem);margin:16px 0 18px" data-reveal data-d="1">
+          real couples.<br /><span class="mark">real packed floors</span>.
+        </h1>
+        <p class="lead" data-reveal data-d="2" style="max-width:62ch">
+          i've got 100+ five-star reviews across google, the knot and zola, but honestly the thing i'm
+          proudest of is that they all kinda say the same thing — the floor stayed full and everybody felt
+          included. here's a handful in their own words.
+        </p>
+        <div class="bigfacts" data-reveal data-d="3" style="margin-top:28px">
+          <div class="trust-item"><b>5.0</b><span>average rating</span></div>
+          <div class="trust-item"><b>100+</b><span>reviews</span></div>
+          <div class="trust-item"><b>3 sites</b><span>google · knot · zola</span></div>
+          <div class="trust-item"><span class="stars" style="font-size:1.4rem">★★★★★</span><span>every time</span></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section--tight" style="padding-bottom:clamp(50px,7vw,90px)">
+      <div class="wrap">
+        <div class="tickets tickets--page">
+          {REVIEWS.map((c, i) => (
+            <figure class="ticket" data-reveal data-d={String(i % 3)}>
+              <div class="ticket__stub"><span>{c.source}</span><span class="stars">★★★★★</span></div>
+              <blockquote class="ticket__quote">"{c.q}"</blockquote>
+              <figcaption class="ticket__who">
+                <Placeholder w={120} h={120} label="couple" rounded="50%" class="ph" />
+                <span><b>{c.n}</b><span>{c.v} · {c.date}</span></span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <p class="note" style="margin-top:26px">*a few of these are placeholder quotes while we pull in the real verified reviews — swap before launch</p>
+      </div>
+    </section>
+
+    <CtaBand kicker="want to be the next one" heading="let's get your floor on this list." />
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .tickets--page { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 980px) { .tickets--page { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 680px) { .tickets--page { grid-template-columns: 1fr; } }
+</style>

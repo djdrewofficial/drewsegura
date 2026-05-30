@@ -1,0 +1,147 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import Placeholder from "../components/Placeholder.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Equalizer from "../components/Equalizer.astro";
+import { TRACKS, VENUES } from "../lib/site";
+
+// extra detail per track for the deep-dive sections
+const detail: Record<string, { long: string; bullets: string[]; img: string }> = {
+  ceremony: {
+    long: "your ceremony is the one part of the day where the sound absolutely cannot fail, so i treat it that way. wireless lavs or handhelds so your officiant and your vows carry to the back row, the right song cued the exact second you start walking, and a soundcheck done long before a single guest sits down.",
+    bullets: ["wireless mics for officiant, vows & readings", "your processional + recessional songs, timed to the step", "subtle, clean sound — guests forget the gear is even there", "full soundcheck before doors"],
+    img: "wedding-ceremony.jpg",
+  },
+  cocktail: {
+    long: "cocktail hour is where i quietly set the temperature for the whole night. nothing aggressive, nothing that screams 'dance now' — just warm, familiar open-format that makes people linger, talk, and get that first drink in. by the time you're announced, the room's already loose.",
+    bullets: ["lounge-leaning open format", "reads the energy of your specific crowd", "bridges smoothly from ceremony to reception", "song requests welcome, vibe stays intact"],
+    img: "wedding-cocktail.jpg",
+  },
+  entrance: {
+    long: "this is the moment. i announce your wedding party and then you two like you're headlining the building, drop your entrance song right on the beat, and the whole room comes unglued. done right, this single minute sets the energy for the entire reception.",
+    bullets: ["custom hype intro for you + your party", "your entrance song, dropped on the beat", "bilingual announcements so everyone's locked in", "optional cold sparks or fog for the walk-in"],
+    img: "wedding-entrance.jpg",
+  },
+  "dance-floor": {
+    long: "this is the whole reason you hire a real dj instead of a playlist. i mix live, off the actual crowd in front of me — reggaetón into a 2000s throwback into a salsa your tía screams for into the edm your friends came for. i never clear the floor and i never run on autopilot.",
+    bullets: ["true open-format, mixed live", "multicultural & multi-generational by design", "your must-plays in, your do-not-plays out", "reads the room and pivots in real time"],
+    img: "wedding-dancefloor.jpg",
+  },
+  mc: {
+    long: "i host your whole night in english and spanish so nobody's standing there lost and both sides of the family feel included. every announcement sounds like a person who's happy to be there, not a robot reading off cards. and the transitions between moments? you'll never notice them happening, which is the point.",
+    bullets: ["fully bilingual EN/ES hosting", "first dance, toasts, cake, bouquet — all handled", "keeps your timeline on track without feeling rushed", "announcements that feel personal, never canned"],
+    img: "wedding-mc.jpg",
+  },
+  extras: {
+    long: "want the wow stuff? this is where we add it. uplighting washed in your colors, your monogram projected on the dance floor, cold sparks for the first dance, dancing on the clouds. all powered by the Xpress Entertainment crew behind me — we add what makes you go 'oh that's sick' and skip whatever you don't care about.",
+    bullets: ["uplighting in your wedding colors", "custom monogram / gobo projection", "cold sparks & low-lying dancing-on-the-clouds", "photo booths, CO2, sax & live add-ons"],
+    img: "wedding-extras.jpg",
+  },
+};
+
+const serviceLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Wedding DJ and MC",
+  provider: { "@type": "Person", name: "DJ Drew Segura" },
+  areaServed: "South Florida",
+  description: "Bilingual wedding DJ and MC services in Miami and Fort Lauderdale — ceremony sound, cocktail hour, grand entrance, open-format dance floor, bilingual hosting and event lighting.",
+};
+---
+<Base
+  title="Wedding DJ Services in Miami & Fort Lauderdale — DJ Drew Segura"
+  description="Everything that goes into a wedding with DJ Drew Segura: ceremony sound, cocktail hour, grand entrance, an open-format bilingual dance floor, MC hosting in English & Spanish, plus uplighting and cold sparks. Serving Miami, Fort Lauderdale & South Florida."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(serviceLd)} slot="head" />
+  <Nav />
+  <main id="main">
+
+    <header class="page-hero section--tight">
+      <div class="wrap">
+        <p class="kicker" data-reveal>The Wedding · Side A → Side B</p>
+        <h1 class="display" style="font-size:clamp(2.6rem,7vw,5.4rem);margin:16px 0 20px" data-reveal data-d="1">
+          your whole night,<br /><span class="mark">start to last call</span>.
+        </h1>
+        <p class="lead" data-reveal data-d="2" style="max-width:64ch">
+          a wedding with me isn't just "a dj in the corner." it's the ceremony sound, the cocktail-hour vibe,
+          the grand entrance, the bilingual hosting, and a dance floor that does not empty out. here's the
+          whole record, track by track — tap into any of them.
+        </p>
+      </div>
+    </header>
+
+    <!-- quick tracklist nav -->
+    <section class="section--tight" style="border-block:2px solid var(--ink);background:var(--paper-2)">
+      <div class="wrap">
+        <ol class="tracks" style="border-top:0">
+          {TRACKS.map((tr, i) => (
+            <li class="track" data-reveal data-d={String(i % 3)} style="padding-block:18px">
+              <span class="track__no">{tr.no}</span>
+              <a class="track__main" href={`#${tr.slug}`}>
+                <h3 style="font-size:clamp(1.15rem,2.2vw,1.6rem)">{tr.t}</h3>
+                <div class="tags">{tr.tags.slice(0,4).map((t) => <span class="tag">{t}</span>)}</div>
+              </a>
+              <div class="track__time"><span class="rt">{tr.rt}</span></div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- deep dives -->
+    {TRACKS.map((tr, i) => (
+      <section class="section chapter-sec" id={tr.slug} style={i % 2 ? "background:var(--paper-2)" : ""}>
+        <div class="wrap">
+          <article class={`chapter ${i % 2 ? "chapter--flip" : ""}`} style="border-top:0;padding-block:0">
+            <div class="chapter__media" data-reveal>
+              <Placeholder w={1100} h={900} label={`${tr.t} — real wedding photo`} file={detail[tr.slug].img} rounded="14px" />
+            </div>
+            <div class="chapter__text" data-reveal data-d="1">
+              <span class="chapter__tag"><span class="trk">{tr.no}</span> {tr.rt}</span>
+              <h2>{tr.t}</h2>
+              <div class="chapter__body">
+                <p class="lead">{detail[tr.slug].long}</p>
+                <ul class="rider" style="margin-top:8px">
+                  {detail[tr.slug].bullets.map((b) => <li>{b}</li>)}
+                </ul>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    ))}
+
+    <!-- service area / SEO -->
+    <section class="section" style="border-top:2px solid var(--ink)">
+      <div class="wrap">
+        <div class="shead" data-reveal>
+          <div class="shead__top">
+            <h2 class="h-xl">where i play.</h2>
+            <span class="shead__side">south florida & beyond</span>
+          </div>
+        </div>
+        <p class="lead" data-reveal>
+          i'm based in the miami / fort lauderdale area and i'm on south florida dance floors basically every
+          weekend. i regularly travel for weddings in palm beach, boca raton, naples, the florida keys, and
+          destination weddings further out. if you've got a venue and a date, just ask.
+        </p>
+        <div class="heardat__list" data-reveal data-d="1" style="margin-top:24px;color:var(--ink)">
+          {["Miami","Miami Beach","Fort Lauderdale","Wilton Manors","Coral Gables","Palm Beach","Boca Raton","Naples","The Florida Keys"].map((c) => (
+            <span class="tag" style="font-size:0.82rem">{c}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <CtaBand heading="ready to hear what your night could sound like?" />
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .chapter-sec { padding-block: clamp(40px, 6vw, 80px); }
+  .chapter--flip .chapter__media { order: 2; }
+  @media (max-width: 880px) { .chapter--flip .chapter__media { order: 0; } }
+</style>

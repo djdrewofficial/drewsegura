@@ -1,11 +1,10 @@
 ---
-const links = [
-  { href: "/about", label: "My Story" },
-  { href: "/#the-set", label: "The Set" },
-  { href: "/#mixer", label: "Build Your Floor" },
-  { href: "/#couples", label: "Real Couples" },
-  { href: "/#faq", label: "FAQ" },
-];
+import { NAV } from "../lib/site";
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isActive = (href: string) => {
+  const base = href.split("#")[0].replace(/\/$/, "") || "/";
+  return base !== "/" && path.startsWith(base);
+};
 ---
 <nav class="nav" id="nav" data-open="false" aria-label="Primary">
   <div class="wrap nav__inner">
@@ -21,12 +20,14 @@ const links = [
     </a>
 
     <ul class="nav__links">
-      {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      {NAV.map((l) => (
+        <li><a href={l.href} aria-current={isActive(l.href) ? "page" : undefined}>{l.label}</a></li>
+      ))}
     </ul>
 
     <div class="nav__right">
       <span class="onair"><span class="dot"></span> Booking 2026–27</span>
-      <a href="/#request" class="btn btn--primary btn--sm">Check Your Date <span class="arr">→</span></a>
+      <a href="/check-availability" class="btn btn--primary btn--sm">Check Your Date <span class="arr">→</span></a>
       <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
         <span></span><span></span><span></span>
       </button>
@@ -34,8 +35,8 @@ const links = [
   </div>
 
   <div class="drawer" id="drawer">
-    {links.map((l) => <a href={l.href} class="drawer-link">{l.label}</a>)}
-    <a href="/#request" class="btn btn--primary drawer-link">Check Your Date <span class="arr">→</span></a>
+    {NAV.map((l) => <a href={l.href} class="drawer-link">{l.label}</a>)}
+    <a href="/check-availability" class="btn btn--primary drawer-link">Check Your Date <span class="arr">→</span></a>
   </div>
 </nav>
 
@@ -51,6 +52,12 @@ const links = [
   document.querySelectorAll(".drawer-link").forEach((a) =>
     a.addEventListener("click", () => setOpen(false))
   );
-  // close on escape
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") setOpen(false); });
+  // shrink nav slightly on scroll
+  let lastY = 0;
+  addEventListener("scroll", () => {
+    const y = scrollY;
+    nav?.classList.toggle("nav--scrolled", y > 12);
+    lastY = y;
+  }, { passive: true });
 </script>

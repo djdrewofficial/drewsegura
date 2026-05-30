@@ -5,6 +5,7 @@ import Footer from "../components/Footer.astro";
 import Placeholder from "../components/Placeholder.astro";
 import Carousel from "../components/Carousel.astro";
 import Record from "../components/Record.astro";
+import CtaBand from "../components/CtaBand.astro";
 
 const chapters = [
   {
@@ -71,10 +72,10 @@ const chapters = [
 ];
 
 const values = [
-  { vno: "01", t: "Bilingual by nature", d: "Raised Dominican-American, fluent in English and Spanish. Both sides of your family get hyped in their own language." },
-  { vno: "02", t: "I read, I don't recite", d: "Years of nightlife with no setlist. I mix off the crowd in front of me, never off a pre-baked playlist." },
-  { vno: "03", t: "Genre has no borders", d: "Reggaetón into 2000s hip-hop into salsa into EDM — open-format mixing that keeps every generation on the floor." },
-  { vno: "04", t: "Weddings are the goal", d: "Clubs were the training. Your wedding is the main event, and it gets my full focus from 'I do' to last call." },
+  { vno: "01", t: "bilingual by nature", d: "raised dominican-american, fluent in english and spanish. both sides of your family get hyped in their own language — no one's left out." },
+  { vno: "02", t: "i read, i don't recite", d: "years of nightlife with no setlist taught me to mix off the actual crowd in front of me, never off some pre-baked playlist." },
+  { vno: "03", t: "genre has no borders", d: "reggaetón into 2000s hip-hop into salsa into edm — open-format mixing that keeps every single generation on the floor." },
+  { vno: "04", t: "weddings are the goal", d: "the clubs were just training. your wedding is the main event and it gets my full focus, from 'i do' to last call." },
 ];
 
 const aboutLd = {
@@ -106,15 +107,15 @@ const aboutLd = {
     <header class="page-hero section--tight" id="top">
       <div class="wrap page-hero__grid">
         <div>
-          <p class="kicker">The long version · Side A → Side B</p>
+          <p class="kicker">the long version · side a → side b</p>
           <h1 class="display" style="font-size:clamp(2.6rem,7vw,5.4rem)" data-reveal>
-            From a DJ Hero game<br />to <span class="mark">your dance floor</span>.
+            from a dj hero game<br />to <span class="mark">your dance floor</span>.
           </h1>
           <p class="lead" data-reveal data-d="1">
-            I'm <strong>Drew Segura</strong>. I've been DJ'ing since I was thirteen — through living-room
-            practice sessions, late-night live streams, Las Olas clubs, and LGBTQ residencies across the
-            country. Every one of those rooms taught me the same thing: how to keep <em>real</em> people
-            dancing. Here's how a backyard hobby turned into 150+ South Florida weddings a year.
+            i'm <strong>Drew Segura</strong>. i've been doing this since i was thirteen — living-room
+            practice, late-night live streams, las olas clubs, lgbtq residencies all over the country. every
+            single one of those rooms taught me the same thing: how to keep <em>real</em> people dancing.
+            here's how a backyard hobby turned into 150+ south florida weddings a year.
           </p>
           <div class="bigfacts" data-reveal data-d="2">
             <div class="trust-item"><b>15+ yrs</b><span>behind the decks</span></div>
@@ -158,8 +159,8 @@ const aboutLd = {
       <div class="wrap">
         <div class="shead" data-reveal>
           <div class="shead__top">
-            <h2 class="h-xl">What all of that<br />means for your night.</h2>
-            <span class="shead__side">The takeaway</span>
+            <h2 class="h-xl">what all of that<br />means for your night.</h2>
+            <span class="shead__side">the takeaway</span>
           </div>
         </div>
         <div class="values">
@@ -174,18 +175,7 @@ const aboutLd = {
       </div>
     </section>
 
-    <!-- closing band -->
-    <section class="band">
-      <div class="wrap band__inner" data-reveal>
-        <p class="kicker" style="color:var(--cream)">Your turn on the floor</p>
-        <h2>Let's make your wedding<br />the one people don't shut up about.</h2>
-        <p>Tell me your date, your venue, and your vibe. If I'm free, you'll get real pricing and zero pressure — from me, within 24 hours.</p>
-        <div class="btn-row" style="justify-content:center">
-          <a href="/#request" class="btn btn--primary">Check your date <span class="arr">→</span></a>
-          <a href="/#mixer" class="btn">Build your dance floor</a>
-        </div>
-      </div>
-    </section>
+    <CtaBand />
 
     <div class="wrap" style="padding-block:34px;text-align:center">
       <Placeholder w={1600} h={600} label="Drew + a packed wedding dance floor, wide crowd shot" file="about-closer-floor.jpg" rounded="14px" />

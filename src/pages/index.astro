@@ -3,49 +3,25 @@ import Base from "../layouts/Base.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import Placeholder from "../components/Placeholder.astro";
-import Record from "../components/Record.astro";
+import Turntable from "../components/Turntable.astro";
 import Equalizer from "../components/Equalizer.astro";
-
-const venues = [
-  "The Biltmore", "Villa Toscana", "The Cruz Building", "Temple House",
-  "Deering Estate", "W Fort Lauderdale", "Crystal Ballroom", "Rusty Pelican",
-];
+import CtaBand from "../components/CtaBand.astro";
+import { VENUES, TRACKS, REVIEWS, CONTACT } from "../lib/site";
 
 const specs = [
-  ["Years on the 1s", "8+"],
-  ["Weddings / year", "150"],
-  ["Dancing humans", "3,000+"],
-  ["Dates missed", "0"],
-  ["Languages", "EN / ES"],
+  ["years on the 1s", "15+"],
+  ["weddings a year", "150+"],
+  ["dancing humans", "3,000+"],
+  ["dates missed", "0"],
+  ["languages", "EN / ES"],
 ];
 
 const rider = [
-  "Yes, I'll play your abuela's salsa request — and I'll make it land.",
-  "I read the floor as it happens. No dead sets, no awkward silences.",
-  "A bilingual mic that hypes both sides of the family the same.",
-  "Backup gear for the backup gear. I don't gamble with your day.",
-  "I know exactly when to drop Juan Luis Guerra and when to drop Bad Bunny.",
-];
-
-const tracks = [
-  { no: "A1", t: "Ceremony Sound", rt: "I DO", d: "Crisp wireless mics so your vows are actually heard, and the right song cued the second the doors open. No feedback, no fumbling — just the goosebumps part.", tags: ["Wireless Mics", "Processional", "Cues"] },
-  { no: "A2", t: "Cocktail Hour", rt: "60:00", d: "Easygoing open-format while everyone finds the bar, their seats, and their second drink. This is where I quietly set the temperature for the whole night.", tags: ["Open Format", "Lounge", "Vibe-setting"] },
-  { no: "A3", t: "The Grand Entrance", rt: "1:30", d: "I announce you two like you're headlining the place. You walk in to your song, the room comes unglued, and the party officially starts.", tags: ["Hype", "MC", "Custom Intro"] },
-  { no: "B1", t: "The Dance Floor", rt: "∞", d: "The whole reason you hired a DJ and not a playlist. Open-format mixing that jumps reggaetón → 2000s hip-hop → salsa → EDM without ever clearing the floor.", tags: ["Reggaetón", "Salsa", "2000s", "EDM", "Throwbacks"] },
-  { no: "B2", t: "Bilingual MC / Hosting", rt: "INCL.", d: "I host the whole night in English and Spanish so nobody's lost and both families feel it. Announcements that feel personal, transitions you never notice.", tags: ["EN / ES", "Crowd Control", "Hosting"] },
-  { no: "B3", t: "The Extras", rt: "+ADD-ON", d: "Want the wow moments? Uplighting in your colors, your monogram on the floor, cold sparks for the first dance, dancing on the clouds. We add what you want, skip what you don't.", tags: ["Uplighting", "Monogram", "Cold Sparks", "Clouds"] },
-];
-
-const genres = [
-  "Reggaeton", "Salsa", "Merengue", "Bachata", "2000s Hip-Hop", "Afrobeats",
-  "EDM / House", "Pop Anthems", "Throwbacks", "Cumbia", "Freestyle", "Amapiano",
-];
-
-// NOTE: Placeholder testimonials — replace with real, verified reviews before launch.
-const couples = [
-  { q: "Our dance floor did not empty once. Drew had my Colombian side and my husband's Jersey crew dancing to the same songs. Witchcraft.", n: "Daniela & Marcus", v: "Villa Toscana, Miami", date: "Mar 2025" },
-  { q: "Bilingual MC meant my abuela understood every word and my friends never stopped screaming. Absolutely perfect night.", n: "Sofía & James", v: "The Cruz Building", date: "Nov 2024" },
-  { q: "We handed him three songs and said 'read the room.' Best decision of the entire wedding, no contest.", n: "Ana & Chris", v: "W Fort Lauderdale", date: "Jun 2025" },
+  "yeah, i'll play your abuela's salsa request — and i'll make it land",
+  "i read the floor as it happens. no dead sets, no awkward silences",
+  "one mic, two languages, both sides of the family hyped the same",
+  "backup gear for the backup gear. i don't gamble with your day",
+  "i know exactly when to drop juan luis guerra and when to drop bad bunny",
 ];
 
 const gallery = [
@@ -58,33 +34,14 @@ const gallery = [
 ];
 
 const steps = [
-  { t: "Check your date", d: "Tell me who, where, and when. I get back to you within 24 hours — usually faster, sometimes with a bad pun. If I'm free, you get real pricing right away." },
-  { t: "Plan it together", d: "We map your timeline, your must-plays, and your do-NOT-plays in an easy planning app. Want to be hands-on or hand me the keys? Totally your call." },
-  { t: "Pack the floor", d: "I show up early and dialed in, with backups for the backups. You dance, your family dances, and nobody important spends the night sitting down." },
+  { t: "check your date", d: "tell me who, where and when. i get back to you within 24 hours — usually way faster, sometimes with a bad pun. if i'm free, you get real pricing right away." },
+  { t: "plan it together", d: "we map out your timeline, your must-plays and your do-NOT-plays in an easy planning app. wanna be hands-on or just hand me the keys? totally your call." },
+  { t: "pack the floor", d: "i show up early and dialed in, with backups for the backups. you dance, your family dances, and nobody important spends the night sitting down." },
 ];
 
-const faqs = [
-  { q: "How much does a wedding DJ cost in South Florida?", a: "It depends on the day — guest count, how many hours, whether you want ceremony sound, lighting, and the fun extras. Most of my couples land in a clear, custom package with no surprise fees buried in the fine print. Send me your date and I'll send back real numbers, no pressure either way." },
-  { q: "Do you really MC a wedding in both English and Spanish?", a: "Sí, every time. I host bilingually so your abuelos and your college friends are all in on the same moment. I was raised Dominican-American and grew up switching between both — on the mic it's second nature, not a gimmick." },
-  { q: "Can we pick the songs — and the ones we never want to hear?", a: "Absolutely. Your must-plays, your hard do-NOT-plays, your special dances — all yours. From there I read the room live and adjust on the fly. It stays your night; I'm just the person making sure it never drags." },
-  { q: "What happens if your gear fails mid-reception?", a: "It won't leave you stuck — I carry full backups for every critical piece of equipment and show up early to soundcheck everything. 15 years and well over a thousand events in, I've never missed a date." },
-  { q: "Do you travel outside Miami and Fort Lauderdale?", a: "Yep. I regularly play Palm Beach, Boca Raton, Naples, the Florida Keys, and destination weddings. If you've got a venue and a date in (or near) South Florida, just ask." },
-  { q: "Do you cover the ceremony, cocktail hour, and reception?", a: "All of it, and it flows as one night — wireless mics for your vows, easy open-format at cocktail hour, then a reception that doesn't let anyone important sit down." },
-  { q: "How far in advance should we book a wedding DJ?", a: "Peak-season Saturdays (especially fall) tend to book 9–14 months out. If your date's sooner than that, still reach out — I sometimes have room and I genuinely love a good last-minute floor." },
-];
-
-const faqLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
-};
+const homeReviews = REVIEWS.slice(0, 3);
 ---
 <Base>
-  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} slot="head" />
   <Nav />
   <main id="main">
 
@@ -94,18 +51,19 @@ const faqLd = {
         <div class="hero__copy">
           <p class="kicker hero__eyebrow">Bilingual Wedding DJ + MC · Miami &amp; Fort Lauderdale</p>
           <h1 class="display hero__title" data-reveal>
-            Nobody remembers<br />the centerpieces.<br />
-            <span class="line2">They remember the <span class="mark">floor</span>.</span>
+            nobody remembers<br />the centerpieces.<br />
+            <span class="line2">they remember the <span class="mark">floor</span>.</span>
           </h1>
           <p class="lead hero__lead" data-reveal data-d="1">
-            Hey, I'm <strong>Drew Segura</strong> — a bilingual (English &amp; Spanish) wedding DJ and MC
-            in South Florida. I've spent 15 years learning one thing: how to get <em>everyone</em> on the
-            floor and keep them there. Your tía, your college friends, your brand-new in-laws — same song,
-            same floor, from the <em>"I do"</em> straight through <em>la hora loca</em>.
+            hey, i'm <strong>Drew Segura</strong>. i'm a bilingual (english &amp; spanish) wedding dj and mc
+            here in south florida, and i've spent 15 years figuring out one thing — how to get
+            <em>everyone</em> on the floor and keep them there. your tía, your college friends, your
+            brand-new in-laws, all going off to the same song. from the <em>"i do"</em> straight through
+            <em>la hora loca</em>.
           </p>
           <div class="btn-row hero__cta" data-reveal data-d="2">
-            <a href="#request" class="btn btn--primary">Check Your Date <span class="arr">→</span></a>
-            <a href="#mixer" class="btn">Build Your Floor</a>
+            <a href="/check-availability" class="btn btn--primary">Check your date <span class="arr">→</span></a>
+            <a href="/build-your-floor" class="btn">Build your dance floor</a>
           </div>
           <div class="hero__trust" data-reveal data-d="3">
             <div class="trust-item">
@@ -119,44 +77,33 @@ const faqLd = {
         </div>
 
         <div class="hero__stage">
-          <div class="turntable" id="turntable" title="Click to scratch">
-            <Record side="SIDE A" title="THE RECEPTION" />
-            <svg class="tonearm" viewBox="0 0 200 200" aria-hidden="true">
-              <circle cx="172" cy="30" r="12" fill="#1B1714" />
-              <circle cx="172" cy="30" r="5" fill="#F0502E" />
-              <line x1="172" y1="30" x2="120" y2="98" stroke="#1B1714" stroke-width="5.5" stroke-linecap="round" />
-              <rect x="110" y="90" width="18" height="9" rx="2" fill="#1B1714" transform="rotate(38 120 98)" />
-            </svg>
-          </div>
-          <span class="spinning" style="position:absolute;top:4px;left:0">
-            Now spinning <Equalizer /> Drew's wedding set
-          </span>
-          <span class="hero__floatnote mono" style="position:absolute;bottom:6px;right:2px">33⅓ RPM · all night long</span>
+          <Turntable side="SIDE A" title="THE RECEPTION" label="tap to hear me cook" />
+          <span class="hero__floatnote mono" style="position:absolute;bottom:-6px;right:2px">that's a real mix · turn it up 🔊</span>
         </div>
       </div>
 
       <div class="wrap">
-        <span class="cue"><span class="needle"></span> Drop the needle — scroll</span>
+        <span class="cue"><span class="needle"></span> drop the needle — scroll</span>
       </div>
     </header>
 
     <!-- ============ HEARD AT ============ -->
     <section class="heardat" aria-label="Venues">
       <div class="wrap heardat__inner">
-        <span class="heardat__label">★ Heard at South Florida's best rooms</span>
+        <span class="heardat__label">★ heard at south florida's best rooms</span>
         <ul class="heardat__list">
-          {venues.map((v) => <li>{v}</li>)}
+          {VENUES.map((v) => <li>{v}</li>)}
         </ul>
       </div>
     </section>
 
-    <!-- ============ ABOUT ============ -->
+    <!-- ============ ABOUT TEASER ============ -->
     <section class="section" id="about">
       <div class="wrap">
         <div class="shead" data-reveal>
           <div class="shead__top">
-            <h2 class="h-xl">I don't play playlists.<br />I read the room.</h2>
-            <span class="shead__side">Side A · Track 01 — The Artist</span>
+            <h2 class="h-xl">i don't play playlists.<br />i read the room.</h2>
+            <span class="shead__side">the short version</span>
           </div>
         </div>
 
@@ -164,10 +111,10 @@ const faqLd = {
           <div data-reveal>
             <div style="position:relative">
               <Placeholder w={900} h={1100} label="Drew Segura — portrait / on the mic, mid-hype" file="drew-portrait.jpg" rounded="14px" />
-              <span class="note" style="position:absolute;bottom:-30px;right:6px;transform:rotate(-2deg)">yes, that's his actual face when the beat drops</span>
+              <span class="note" style="position:absolute;bottom:-30px;right:6px;transform:rotate(-2deg)">yeah that's his actual face when the beat drops</span>
             </div>
             <dl class="specs" style="margin-top:46px">
-              <div class="specs__head"><span>Track Listing — The Specs</span><span>33⅓</span></div>
+              <div class="specs__head"><span>track listing — the specs</span><span>33⅓</span></div>
               {specs.map(([k, v]) => (
                 <div class="specs__row"><dt>{k}</dt><dd>{v}</dd></div>
               ))}
@@ -176,31 +123,31 @@ const faqLd = {
 
           <div data-reveal data-d="1">
             <p class="lead" style="margin-bottom:20px">
-              I grew up in a Dominican-American house where merengue, freestyle, and 2000s hip-hop all
-              lived on the same radio dial. Honestly? That's still exactly how I DJ a wedding.
+              i grew up in a dominican-american house where merengue, freestyle and 2000s hip-hop all lived
+              on the same radio dial. honestly? that's still exactly how i dj a wedding.
             </p>
             <p style="margin-bottom:18px">
-              I've been DJ'ing since I was 13 — from bedroom practice to Las Olas nightclubs to LGBTQ
-              residencies around the country, including my weekly night at Hunters in Wilton Manors.
-              All of that was really just practice for the rooms I love most: <strong>weddings</strong>.
-              I started <a class="tlink" href="https://xpressdjs.com" target="_blank" rel="noopener noreferrer">Xpress DJs</a> back in 2016, and these days we play
-              150+ South Florida weddings a year.
+              i've been doing this since i was 13 — bedroom practice, late-night live streams, las olas
+              nightclubs, and lgbtq residencies all over the country, including my weekly night at hunters
+              in wilton manors. all of it was really just training for the rooms i love most, which is
+              <strong>weddings</strong>. i started <a class="tlink" href={CONTACT.companyUrl} target="_blank" rel="noopener noreferrer">Xpress DJs</a> back in 2016 and these days
+              we play 150+ south florida weddings a year.
             </p>
             <p>
-              Being open-format means I'm not boxed into one genre or one generation. Reggaetón into a
-              2000s throwback into a salsa your abuela will lose it over into the EDM your friends came
-              for — mixed live, read off the actual crowd in front of me. Never a pre-made playlist on
-              autopilot.
+              being open-format means i'm not boxed into one genre or one generation. reggaetón into a
+              2000s throwback into a salsa your tía will lose it over into the edm your friends came for —
+              all mixed live, read off the actual crowd in front of me. never a pre-made playlist running
+              on autopilot.
             </p>
 
-            <h3 class="h-md" style="margin:30px 0 4px">A few things you can count on</h3>
+            <h3 class="h-md" style="margin:30px 0 4px">a few things you can count on</h3>
             <ul class="rider">
               {rider.map((r) => <li>{r}</li>)}
             </ul>
 
             <div class="btn-row" style="margin-top:30px">
-              <a href="/about" class="btn btn--pine">Read my full story <span class="arr">→</span></a>
-              <a href="#the-set" class="tlink">or skip to the set →</a>
+              <a href="/about" class="btn btn--pine">read my full story <span class="arr">→</span></a>
+              <a href="/weddings" class="tlink">or see how a wedding goes →</a>
             </div>
           </div>
         </div>
@@ -209,26 +156,26 @@ const faqLd = {
 
     <div class="wrap"><hr class="rule" /></div>
 
-    <!-- ============ THE SET (tracklist) ============ -->
+    <!-- ============ THE SET (tracklist teaser) ============ -->
     <section class="section" id="the-set">
       <div class="wrap">
         <div class="shead" data-reveal>
           <div class="shead__top">
-            <h2 class="h-xl">The full set.<br />Side A to last call.</h2>
-            <span class="shead__side">The night, as an album</span>
+            <h2 class="h-xl">the full set.<br />side a to last call.</h2>
+            <span class="shead__side">the night, as an album</span>
           </div>
-          <p class="lead">Here's everything that goes into a wedding with me — ceremony to last call — laid out like the record it deserves to be. Mix and match; we'll build the night around your timeline.</p>
+          <p class="lead">here's everything that goes into a wedding with me, ceremony to last call, laid out like the record it deserves to be. tap any track for the details.</p>
         </div>
 
         <ol class="tracks">
-          {tracks.map((tr, i) => (
-            <li class="track" data-reveal data-d={String((i % 3) + 0)}>
+          {TRACKS.map((tr, i) => (
+            <li class="track" data-reveal data-d={String(i % 3)}>
               <span class="track__no">{tr.no}</span>
-              <div class="track__main">
+              <a class="track__main" href={`/weddings#${tr.slug}`}>
                 <h3>{tr.t}</h3>
                 <p>{tr.d}</p>
                 <div class="tags">{tr.tags.map((t) => <span class="tag">{t}</span>)}</div>
-              </div>
+              </a>
               <div class="track__time">
                 <span class="rt">{tr.rt}</span>
                 <span class="track__play" aria-hidden="true">
@@ -239,68 +186,50 @@ const faqLd = {
             </li>
           ))}
         </ol>
+        <div class="btn-row" style="margin-top:34px">
+          <a href="/weddings" class="btn btn--ink">see the whole wedding experience <span class="arr">→</span></a>
+        </div>
       </div>
     </section>
 
-    <!-- ============ MIXER (interactive) ============ -->
-    <section class="section" id="mixer">
+    <!-- ============ BUILD TEASER ============ -->
+    <section class="section bg-strip">
       <div class="wrap">
-        <div class="shead" data-reveal>
-          <div class="shead__top">
-            <h2 class="h-xl">Build your dance floor.</h2>
-            <span class="shead__side">Interactive · B-side bonus</span>
-          </div>
-          <p class="lead">Tap every genre your crowd actually moves to. I mix across all of them in one night — think of this as a five-second preview of the chaos.</p>
-        </div>
-
-        <div class="mixer__panel" data-reveal data-d="1">
-          <div class="mixer__bar">
-            <span>DREW-OS · floor mixer v1.0</span>
-            <span class="dots"><i></i><i></i><i></i></span>
-          </div>
-          <div class="mixer__body">
-            <div class="mixer__left">
-              <p class="kicker kicker--ink">Pick your flavors</p>
-              <div class="chip-grid" id="chipGrid" role="group" aria-label="Choose genres">
-                {genres.map((g) => (
-                  <button class="chip" aria-pressed="false" data-genre={g}>{g}<span class="x" aria-hidden="true">✕</span></button>
-                ))}
-              </div>
-              <p class="note" style="margin-top:18px">pro tip: the more you pick, the more Drew shows off</p>
+        <div class="teaser">
+          <div data-reveal>
+            <p class="kicker">Interactive · the fun part</p>
+            <h2 class="h-xl" style="margin:12px 0 16px">build your dance floor.<br />see what i'd do with it.</h2>
+            <p class="lead">pick every genre your crowd actually moves to and watch your floor fill up in real time. it's a five-second preview of the chaos — and a pretty good way to tell me exactly who you are.</p>
+            <div class="btn-row" style="margin-top:24px">
+              <a href="/build-your-floor" class="btn btn--primary">build your floor <span class="arr">→</span></a>
             </div>
-            <div class="mixer__right">
-              <div class="readout">
-                <span class="kicker kicker--ink">Your set</span>
-                <span class="readout__name" id="setName">Tap to start the mix</span>
-                <span class="readout__desc" id="setDesc">Your floor's empty right now. Pick a few genres and watch it fill up.</span>
+          </div>
+          <div data-reveal data-d="1" class="teaser__art">
+            <div class="eqcard">
+              <div class="eqcard__bar">DREW-OS · floor preview</div>
+              <div class="eqcard__body">
+                {["Reggaetón","Salsa","2000s","EDM","Bachata","Afrobeats"].map((g) => <span class="chip" aria-hidden="true">{g}</span>)}
               </div>
-              <div class="meter">
-                <div class="meter__top"><span>Crowd energy</span><span id="energyPct">0%</span></div>
-                <div class="meter__track"><div class="meter__fill" id="energyFill" style="width:0%"></div></div>
-              </div>
-              <div class="eq-wall" id="eqWall" aria-hidden="true">
-                {Array.from({ length: 16 }).map(() => <i></i>)}
-              </div>
-              <a href="#request" class="btn btn--primary" style="justify-content:center">Lock in this vibe → Check your date</a>
+              <div class="eqcard__wall" aria-hidden="true">{Array.from({length:18}).map(() => <i></i>)}</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ COUPLES (tickets) ============ -->
+    <!-- ============ REVIEWS TEASER ============ -->
     <section class="section" id="couples">
       <div class="wrap">
         <div class="shead" data-reveal>
           <div class="shead__top">
-            <h2 class="h-xl">Real couples.<br />Real packed floors.</h2>
-            <span class="shead__side">Admit two · ★★★★★</span>
+            <h2 class="h-xl">real couples.<br />real packed floors.</h2>
+            <span class="shead__side">admit two · ★★★★★</span>
           </div>
         </div>
         <div class="tickets">
-          {couples.map((c, i) => (
+          {homeReviews.map((c, i) => (
             <figure class="ticket" data-reveal data-d={String(i)}>
-              <div class="ticket__stub"><span>Admit Two</span><span class="stars">★★★★★</span></div>
+              <div class="ticket__stub"><span>{c.source}</span><span class="stars">★★★★★</span></div>
               <blockquote class="ticket__quote">"{c.q}"</blockquote>
               <figcaption class="ticket__who">
                 <Placeholder w={120} h={120} label="couple" rounded="50%" class="ph" />
@@ -309,17 +238,20 @@ const faqLd = {
             </figure>
           ))}
         </div>
-        <p class="note" style="margin-top:22px">100+ five-star reviews across Google, Zola &amp; The Knot — these are just three.</p>
+        <div class="btn-row" style="margin-top:26px">
+          <a href="/reviews" class="btn btn--pine">read more reviews <span class="arr">→</span></a>
+          <span class="note" style="margin:0">100+ five-star reviews across google, zola &amp; the knot — these are just three</span>
+        </div>
       </div>
     </section>
 
-    <!-- ============ GALLERY (contact sheet) ============ -->
+    <!-- ============ GALLERY ============ -->
     <section class="section" aria-label="Gallery">
       <div class="wrap">
         <div class="shead" data-reveal>
           <div class="shead__top">
-            <h2 class="h-xl">Receipts from the floor.</h2>
-            <span class="shead__side">Side B · The Proof Sheet</span>
+            <h2 class="h-xl">receipts from the floor.</h2>
+            <span class="shead__side">side b · the proof sheet</span>
           </div>
         </div>
         <div class="sheet">
@@ -330,7 +262,7 @@ const faqLd = {
             </figure>
           ))}
         </div>
-        <p class="note" style="margin-top:20px">*every frame is a sized, ready-to-drop placeholder — swap in your real wedding photos and it just works.</p>
+        <p class="note" style="margin-top:20px">*every frame is a sized, ready-to-drop placeholder — swap in your real wedding photos and it just works</p>
       </div>
     </section>
 
@@ -339,8 +271,8 @@ const faqLd = {
       <div class="wrap">
         <div class="shead" data-reveal>
           <div class="shead__top">
-            <h2 class="h-xl">How booking works.</h2>
-            <span class="shead__side">Three cue points</span>
+            <h2 class="h-xl">how booking works.</h2>
+            <span class="shead__side">three cue points</span>
           </div>
         </div>
         <div class="steps">
@@ -352,85 +284,13 @@ const faqLd = {
             </article>
           ))}
         </div>
-      </div>
-    </section>
-
-    <!-- ============ FAQ ============ -->
-    <section class="section" id="faq">
-      <div class="wrap">
-        <div class="shead" data-reveal>
-          <div class="shead__top">
-            <h2 class="h-xl">Liner notes.<br />The honest Q&amp;A.</h2>
-            <span class="shead__side">Read before you book</span>
-          </div>
-        </div>
-        <div class="faq">
-          {faqs.map((f, i) => (
-            <details open={i === 0}>
-              <summary>{f.q}<span class="sign" aria-hidden="true"></span></summary>
-              <div class="faq__a"><p>{f.a}</p></div>
-            </details>
-          ))}
+        <div class="btn-row" style="margin-top:34px;justify-content:center">
+          <a href="/check-availability" class="btn btn--primary">start step one → check your date</a>
         </div>
       </div>
     </section>
 
-    <!-- ============ REQUEST LINE (form) ============ -->
-    <section class="section" id="request">
-      <div class="wrap">
-        <div class="request" data-reveal>
-          <div class="request__grid">
-            <div class="request__pitch">
-              <p class="kicker">The Request Line — open</p>
-              <h2 class="h-xl">Check your date.</h2>
-              <p>Drop your details below. If I'm open for your wedding, I'll get back to you within 24 hours with real pricing and zero pressure — from one actual human (me, Drew), not a bot or a sales script.</p>
-              <ul class="request__assure">
-                <li>★★★★★ from 100+ South Florida couples</li>
-                <li>Reply within 24 hours, guaranteed</li>
-                <li>No spam, no bots, no sales script</li>
-                <li>Bilingual — English or Español</li>
-              </ul>
-              <span class="spinning" style="align-self:flex-start;background:transparent;color:var(--cream);border-color:rgba(246,238,226,.4);box-shadow:none">
-                Now booking <Equalizer /> 2026 &amp; 2027
-              </span>
-            </div>
-
-            <form class="request__form" id="leadForm" action="https://formspree.io/f/REPLACE_ME" method="POST" novalidate>
-              <div class="field row2">
-                <div class="field"><label for="f-name">Your name <span class="req">*</span></label>
-                  <input class="input" id="f-name" name="name" type="text" placeholder="Alex" required /></div>
-                <div class="field"><label for="f-partner">Partner's name</label>
-                  <input class="input" id="f-partner" name="partner" type="text" placeholder="Sam" /></div>
-              </div>
-              <div class="field row2">
-                <div class="field"><label for="f-email">Email <span class="req">*</span></label>
-                  <input class="input" id="f-email" name="email" type="email" placeholder="you@email.com" required /></div>
-                <div class="field"><label for="f-phone">Phone</label>
-                  <input class="input" id="f-phone" name="phone" type="tel" placeholder="(305) 555-0123" /></div>
-              </div>
-              <div class="field row2">
-                <div class="field"><label for="f-date">Wedding date</label>
-                  <input class="input" id="f-date" name="wedding_date" type="date" /></div>
-                <div class="field"><label for="f-venue">Venue or city</label>
-                  <input class="input" id="f-venue" name="venue" type="text" placeholder="Villa Toscana, Miami" /></div>
-              </div>
-              <div class="field"><label for="f-vibe">Your dance floor in 3 words</label>
-                <input class="input" id="f-vibe" name="vibe" type="text" placeholder="reggaeton, chaos, joy" /></div>
-
-              <div class="form-foot">
-                <button type="submit" class="btn btn--primary">Send the request <span class="arr">→</span></button>
-                <span class="fineprint">Prefer to talk? Text Drew: 954·233·0698</span>
-              </div>
-
-              <div class="form-success" id="formSuccess" role="status" aria-live="polite">
-                <div class="big">🎉 Request received!</div>
-                <p>Consider your date pinned. Drew will hit you back within 24 hours — keep an eye on your inbox (and your spam, just in case).</p>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
+    <CtaBand />
   </main>
 
   <Footer />
@@ -438,136 +298,6 @@ const faqLd = {
 </Base>
 
 <script>
-  // ---------- tonearm cue + record scratch ----------
-  const tt = document.getElementById("turntable");
-  if (tt) {
-    const cueIo = new IntersectionObserver((entries) => {
-      entries.forEach((e) => { if (e.isIntersecting) { tt.classList.add("cued"); cueIo.unobserve(e.target); } });
-    }, { threshold: 0.4 });
-    cueIo.observe(tt);
-
-    const platter = tt.querySelector(".platter");
-    tt.addEventListener("click", () => {
-      if (!platter) return;
-      platter.classList.add("scratch");
-      tt.classList.toggle("cued");
-      setTimeout(() => { platter.classList.remove("scratch"); tt.classList.add("cued"); }, 520);
-    });
-  }
-
-  // ---------- record speeds up while scrolling ----------
-  const platterEl = document.querySelector(".platter");
-  let scrollT: ReturnType<typeof setTimeout>;
-  if (platterEl) {
-    addEventListener("scroll", () => {
-      platterEl.classList.add("scrolling");
-      clearTimeout(scrollT);
-      scrollT = setTimeout(() => platterEl.classList.remove("scrolling"), 220);
-    }, { passive: true });
-  }
-
-  // ---------- floor mixer ----------
-  const grid = document.getElementById("chipGrid");
-  const setName = document.getElementById("setName");
-  const setDesc = document.getElementById("setDesc");
-  const energyPct = document.getElementById("energyPct");
-  const energyFill = document.getElementById("energyFill") as HTMLElement | null;
-  const eqWall = document.getElementById("eqWall");
-
-  const LATIN = ["Salsa", "Merengue", "Bachata", "Cumbia"];
-  const GLOBAL = ["Reggaeton", "Afrobeats", "Amapiano"];
-  const RETRO = ["2000s Hip-Hop", "Throwbacks", "Freestyle"];
-  const PEAK = ["EDM / House", "Pop Anthems"];
-
-  const has = (arr: string[], set: Set<string>) => arr.some((x) => set.has(x));
-
-  function nameFor(set: Set<string>): string {
-    const parts: string[] = [];
-    if (has(LATIN, set)) parts.push("Latin");
-    if (has(GLOBAL, set)) parts.push("Global");
-    if (has(RETRO, set)) parts.push("Throwback");
-    if (has(PEAK, set)) parts.push("Peak-Time");
-    if (parts.length === 0) return "Tap to start the mix";
-    if (parts.length >= 3) return "The Multicultural Madhouse";
-    return `The ${parts.join(" / ")} Mix`;
-  }
-
-  function descFor(set: Set<string>): string {
-    const n = set.size;
-    if (n === 0) return "Your floor's empty right now. Pick a few genres and watch it fill up.";
-    if (n === 1) return "A solid start — but Drew's whole thing is the blend. Add a couple more.";
-    const bits: string[] = [];
-    if (has(LATIN, set)) bits.push("abuela's already on the floor");
-    if (has(GLOBAL, set)) bits.push("the global section is unhinged");
-    if (has(RETRO, set)) bits.push("everyone's screaming the words");
-    if (has(PEAK, set)) bits.push("the after-party crew is sweating");
-    if (n >= 6) return "Certified chaos. This is the exact crossover Drew lives for — nobody sits down, nobody agrees on a genre, everybody dances.";
-    return `Now we're talking — ${bits.slice(0, 3).join(", ")}. Drew threads all of it together live.`;
-  }
-
-  function paintEq(energy: number) {
-    if (!eqWall) return;
-    const bars = eqWall.querySelectorAll("i");
-    bars.forEach((b) => {
-      const base = energy / 100;
-      const h = Math.max(8, Math.min(100, (base * 70 + Math.random() * 45) * (0.5 + base)));
-      (b as HTMLElement).style.height = `${h}%`;
-    });
-  }
-
-  let eqTimer: ReturnType<typeof setInterval> | null = null;
-  function update() {
-    if (!grid) return;
-    const set = new Set<string>(
-      Array.from(grid.querySelectorAll('.chip[aria-pressed="true"]')).map(
-        (c) => (c as HTMLElement).dataset.genre as string
-      )
-    );
-    const energy = set.size === 0 ? 0 : Math.min(100, 32 + set.size * 8);
-    if (setName) setName.textContent = nameFor(set);
-    if (setDesc) setDesc.textContent = descFor(set);
-    if (energyPct) energyPct.textContent = `${energy}%`;
-    if (energyFill) energyFill.style.width = `${energy}%`;
-    paintEq(energy);
-
-    if (set.size > 0 && !eqTimer) eqTimer = setInterval(() => paintEq(energy), 360);
-    if (set.size === 0 && eqTimer) { clearInterval(eqTimer); eqTimer = null; if (eqWall) eqWall.querySelectorAll("i").forEach((b) => ((b as HTMLElement).style.height = "30%")); }
-    else if (eqTimer) { clearInterval(eqTimer); eqTimer = setInterval(() => paintEq(energy), 360); }
-  }
-
-  grid?.addEventListener("click", (e) => {
-    const chip = (e.target as HTMLElement).closest(".chip") as HTMLElement | null;
-    if (!chip) return;
-    chip.setAttribute("aria-pressed", chip.getAttribute("aria-pressed") === "true" ? "false" : "true");
-    update();
-  });
-
-  // ---------- lead form ----------
-  const form = document.getElementById("leadForm") as HTMLFormElement | null;
-  const success = document.getElementById("formSuccess");
-  form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const name = (form.querySelector("#f-name") as HTMLInputElement);
-    const email = (form.querySelector("#f-email") as HTMLInputElement);
-    let ok = true;
-    [name, email].forEach((inp) => {
-      if (!inp.value.trim() || (inp.type === "email" && !/.+@.+\..+/.test(inp.value))) {
-        ok = false; inp.style.boxShadow = "3px 3px 0 var(--tangerine)"; inp.focus();
-      }
-    });
-    if (!ok) return;
-
-    const isDemo = form.action.includes("REPLACE_ME");
-    if (!isDemo) {
-      try {
-        await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
-      } catch (_) { /* still show success UX */ }
-    }
-    form.querySelectorAll(".field, .form-foot").forEach((el) => ((el as HTMLElement).style.display = "none"));
-    success?.classList.add("show");
-    burst();
-  });
-
   // ---------- confetti (no deps) ----------
   const canvas = document.getElementById("confetti") as HTMLCanvasElement | null;
   const ctx = canvas?.getContext("2d");
@@ -578,18 +308,13 @@ const faqLd = {
   size(); addEventListener("resize", size);
   function burst() {
     if (!canvas || !ctx) return;
-    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     for (let i = 0; i < 140; i++) {
       pieces.push({
-        x: innerWidth / 2 + (Math.random() - 0.5) * 240,
-        y: innerHeight / 3,
-        r: 4 + Math.random() * 7,
-        c: COLORS[(Math.random() * COLORS.length) | 0],
-        vx: (Math.random() - 0.5) * 11,
-        vy: -6 - Math.random() * 9,
-        rot: Math.random() * 6.28,
-        vr: (Math.random() - 0.5) * 0.4,
+        x: innerWidth / 2 + (Math.random() - 0.5) * 240, y: innerHeight / 3,
+        r: 4 + Math.random() * 7, c: COLORS[(Math.random() * COLORS.length) | 0],
+        vx: (Math.random() - 0.5) * 11, vy: -6 - Math.random() * 9,
+        rot: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.4,
       });
     }
     if (!raf) tick();
@@ -605,6 +330,7 @@ const faqLd = {
     pieces = pieces.filter((p) => p.y < canvas.height + 40);
     raf = pieces.length ? requestAnimationFrame(tick) : 0;
   }
+  (window as any).__burst = burst;
 
   // ---------- konami easter egg ----------
   const code = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
@@ -614,7 +340,7 @@ const faqLd = {
     if (idx === code.length) {
       idx = 0; burst();
       const t = document.createElement("div");
-      t.textContent = "🎧 ENCORE! You found the secret track.";
+      t.textContent = "🎧 ENCORE! you found the secret track.";
       t.style.cssText = "position:fixed;left:50%;top:24px;transform:translateX(-50%);z-index:120;background:var(--ink);color:var(--cream);font-family:var(--font-mono);font-size:.85rem;padding:12px 18px;border-radius:10px;box-shadow:var(--shadow)";
       document.body.appendChild(t);
       setTimeout(() => t.remove(), 3200);

@@ -1,0 +1,138 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import Equalizer from "../components/Equalizer.astro";
+import { CONTACT } from "../lib/site";
+---
+<Base
+  title="Check Your Date — Book DJ Drew Segura | Miami Wedding DJ"
+  description="See if bilingual Miami & Fort Lauderdale wedding DJ Drew Segura is free for your wedding date. Real pricing back within 24 hours, zero pressure. Or text 954·233·0698."
+>
+  <Nav />
+  <main id="main">
+    <section class="section" id="request">
+      <div class="wrap">
+        <div class="request" data-reveal>
+          <div class="request__grid">
+            <div class="request__pitch">
+              <p class="kicker">The Request Line — open</p>
+              <h2 class="h-xl">check your date.</h2>
+              <p>drop your details below. if i'm open for your wedding i'll get back to you within 24 hours with real pricing and zero pressure — from one actual human (me, drew), not a bot and not some sales script.</p>
+              <ul class="request__assure">
+                <li>★★★★★ from 100+ south florida couples</li>
+                <li>reply within 24 hours, guaranteed</li>
+                <li>no spam, no bots, no script</li>
+                <li>bilingual — english or español</li>
+              </ul>
+              <span class="spinning" style="align-self:flex-start;background:transparent;color:var(--cream);border-color:rgba(246,238,226,.4);box-shadow:none">
+                now booking <Equalizer /> 2026 &amp; 2027
+              </span>
+              <p style="margin-top:18px;color:rgba(246,238,226,0.7);font-size:0.92rem">
+                rather just talk? text or call me:<br />
+                <a class="tlink" style="color:var(--tangerine);font-size:1.15rem;font-weight:800" href={`tel:${CONTACT.phoneDial}`}>{CONTACT.phoneDisplay}</a>
+              </p>
+            </div>
+
+            <form class="request__form" id="leadForm" action="https://formspree.io/f/REPLACE_ME" method="POST" novalidate>
+              <div class="field row2">
+                <div class="field"><label for="f-name">your name <span class="req">*</span></label>
+                  <input class="input" id="f-name" name="name" type="text" placeholder="Alex" required /></div>
+                <div class="field"><label for="f-partner">partner's name</label>
+                  <input class="input" id="f-partner" name="partner" type="text" placeholder="Sam" /></div>
+              </div>
+              <div class="field row2">
+                <div class="field"><label for="f-email">email <span class="req">*</span></label>
+                  <input class="input" id="f-email" name="email" type="email" placeholder="you@email.com" required /></div>
+                <div class="field"><label for="f-phone">phone</label>
+                  <input class="input" id="f-phone" name="phone" type="tel" placeholder="(305) 555-0123" /></div>
+              </div>
+              <div class="field row2">
+                <div class="field"><label for="f-date">wedding date</label>
+                  <input class="input" id="f-date" name="wedding_date" type="date" /></div>
+                <div class="field"><label for="f-venue">venue or city</label>
+                  <input class="input" id="f-venue" name="venue" type="text" placeholder="Villa Toscana, Miami" /></div>
+              </div>
+              <div class="field"><label for="f-vibe">your dance floor in 3 words</label>
+                <input class="input" id="f-vibe" name="vibe" type="text" placeholder="reggaetón, chaos, joy" /></div>
+              <div class="field"><label for="f-msg">anything else? (optional)</label>
+                <textarea class="input" id="f-msg" name="message" placeholder="guest count, must-play songs, the vision..."></textarea></div>
+
+              <div class="form-foot">
+                <button type="submit" class="btn btn--primary">send the request <span class="arr">→</span></button>
+                <span class="fineprint">prefer to talk? text drew: {CONTACT.phoneDisplay}</span>
+              </div>
+
+              <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+                <div class="big">🎉 request received!</div>
+                <p>consider your date pinned. i'll hit you back within 24 hours — keep an eye on your inbox (and your spam, just in case).</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <canvas id="confetti" aria-hidden="true"></canvas>
+</Base>
+
+<script>
+  // prefill the vibe field if they came from the floor mixer (?vibe=...)
+  const params = new URLSearchParams(location.search);
+  const vibe = params.get("vibe");
+  if (vibe) {
+    const vf = document.getElementById("f-vibe") as HTMLInputElement | null;
+    if (vf) vf.value = vibe;
+  }
+
+  const form = document.getElementById("leadForm") as HTMLFormElement | null;
+  const success = document.getElementById("formSuccess");
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = form.querySelector("#f-name") as HTMLInputElement;
+    const email = form.querySelector("#f-email") as HTMLInputElement;
+    let ok = true;
+    [name, email].forEach((inp) => {
+      if (!inp.value.trim() || (inp.type === "email" && !/.+@.+\..+/.test(inp.value))) {
+        ok = false; inp.style.boxShadow = "3px 3px 0 var(--tangerine)"; inp.focus();
+      }
+    });
+    if (!ok) return;
+    const isDemo = form.action.includes("REPLACE_ME");
+    if (!isDemo) {
+      try { await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } }); }
+      catch (_) { /* still show success UX */ }
+    }
+    form.querySelectorAll(".field, .form-foot").forEach((el) => ((el as HTMLElement).style.display = "none"));
+    success?.classList.add("show");
+    burst();
+  });
+
+  // confetti
+  const canvas = document.getElementById("confetti") as HTMLCanvasElement | null;
+  const ctx = canvas?.getContext("2d");
+  const COLORS = ["#F0502E", "#124C44", "#B5832B", "#1B1714", "#F6EEE2"];
+  let pieces: any[] = []; let raf = 0;
+  function size() { if (canvas) { canvas.width = innerWidth; canvas.height = innerHeight; } }
+  size(); addEventListener("resize", size);
+  function burst() {
+    if (!canvas || !ctx || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    for (let i = 0; i < 140; i++) pieces.push({
+      x: innerWidth / 2 + (Math.random() - 0.5) * 240, y: innerHeight / 3,
+      r: 4 + Math.random() * 7, c: COLORS[(Math.random() * COLORS.length) | 0],
+      vx: (Math.random() - 0.5) * 11, vy: -6 - Math.random() * 9,
+      rot: Math.random() * 6.28, vr: (Math.random() - 0.5) * 0.4,
+    });
+    if (!raf) tick();
+  }
+  function tick() {
+    if (!canvas || !ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach((p) => { p.vy += 0.32; p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = p.c;
+      ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 0.6); ctx.restore(); });
+    pieces = pieces.filter((p) => p.y < canvas.height + 40);
+    raf = pieces.length ? requestAnimationFrame(tick) : 0;
+  }
+</script>
