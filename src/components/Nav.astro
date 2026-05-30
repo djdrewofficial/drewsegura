@@ -1,0 +1,55 @@
+---
+const links = [
+  { href: "#the-set", label: "The Set" },
+  { href: "#mixer", label: "Build Your Floor" },
+  { href: "#couples", label: "Real Couples" },
+  { href: "#faq", label: "FAQ" },
+];
+---
+<nav class="nav" id="nav" data-open="false" aria-label="Primary">
+  <div class="wrap nav__inner">
+    <a href="#top" class="brand" aria-label="DJ Drew Segura — home">
+      <svg class="brand__rec" viewBox="0 0 60 60" aria-hidden="true">
+        <circle cx="30" cy="30" r="29" fill="#1B1714"/>
+        <circle cx="30" cy="30" r="22" fill="none" stroke="#5a544d" stroke-width="0.8"/>
+        <circle cx="30" cy="30" r="16" fill="none" stroke="#5a544d" stroke-width="0.8"/>
+        <circle cx="30" cy="30" r="11" fill="#F0502E"/>
+        <circle cx="30" cy="30" r="2.4" fill="#F6EEE2"/>
+      </svg>
+      <span>DREW SEGURA<small>WEDDING DJ · MIAMI</small></span>
+    </a>
+
+    <ul class="nav__links">
+      {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+    </ul>
+
+    <div class="nav__right">
+      <span class="onair"><span class="dot"></span> Booking 2026–27</span>
+      <a href="#request" class="btn btn--primary btn--sm">Check Your Date <span class="arr">→</span></a>
+      <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="drawer" id="drawer">
+    {links.map((l) => <a href={l.href} class="drawer-link">{l.label}</a>)}
+    <a href="#request" class="btn btn--primary drawer-link">Check Your Date <span class="arr">→</span></a>
+  </div>
+</nav>
+
+<script>
+  const nav = document.getElementById("nav");
+  const toggle = document.getElementById("navToggle");
+  const setOpen = (open: boolean) => {
+    nav?.setAttribute("data-open", String(open));
+    toggle?.setAttribute("aria-expanded", String(open));
+    toggle?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  };
+  toggle?.addEventListener("click", () => setOpen(nav?.getAttribute("data-open") !== "true"));
+  document.querySelectorAll(".drawer-link").forEach((a) =>
+    a.addEventListener("click", () => setOpen(false))
+  );
+  // close on escape
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") setOpen(false); });
+</script>

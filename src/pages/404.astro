@@ -1,0 +1,18 @@
+---
+import Base from "../layouts/Base.astro";
+import Record from "../components/Record.astro";
+---
+<Base title="Track not found — DJ Drew Segura" description="This page skipped. Let's get you back to the dance floor.">
+  <main id="main" style="min-height:80vh;display:grid;place-items:center;text-align:center;padding:80px 24px">
+    <div style="max-width:560px;display:grid;gap:22px;justify-items:center">
+      <div style="width:200px"><Record side="SIDE ?" title="NOT FOUND" /></div>
+      <p class="kicker">Error 404 · the needle skipped</p>
+      <h1 class="display" style="font-size:clamp(2.6rem,9vw,5rem)">This track<br />doesn't exist.</h1>
+      <p class="lead" style="margin-inline:auto">Somebody requested a song that isn't in the crate. Let's get you back to the floor.</p>
+      <div class="btn-row" style="justify-content:center">
+        <a href="/" class="btn btn--primary">Back to the top <span class="arr">→</span></a>
+        <a href="/#request" class="btn">Check your date</a>
+      </div>
+    </div>
+  </main>
+</Base>

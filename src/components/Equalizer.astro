@@ -1,0 +1,10 @@
+---
+interface Props {
+  bars?: number;
+  class?: string;
+}
+const { bars = 5, class: cls = "" } = Astro.props;
+---
+<span class={`eq ${cls}`} aria-hidden="true">
+  {Array.from({ length: bars }).map(() => <i></i>)}
+</span>
