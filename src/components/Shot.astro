@@ -1,0 +1,25 @@
+---
+/**
+ * Photo slot. With `src` it renders the real image; without it, a branded
+ * placeholder that names the shot we need + the suggested filename.
+ */
+interface Props {
+  ratio?: string;   // CSS aspect-ratio, e.g. "4 / 5"
+  label: string;
+  file?: string;
+  src?: string;
+  alt?: string;
+  class?: string;
+}
+const { ratio = "4 / 5", label, file, src, alt = label, class: cls = "" } = Astro.props;
+---
+<figure class={`shot ${cls}`} style={`aspect-ratio:${ratio};`}>
+  {src ? (
+    <img src={src} alt={alt} loading="lazy" decoding="async" />
+  ) : (
+    <figcaption class="shot__label" role="img" aria-label={`Photo coming soon: ${label}`}>
+      {label}
+      {file && <small>{file}</small>}
+    </figcaption>
+  )}
+</figure>
