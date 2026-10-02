@@ -33,11 +33,11 @@ const USECASES = ["Brand activations", "Product launches", "Pop-ups", "Store ope
 const NIGHT_VENUES = ["Vibe Las Olas", "American Social", "The Manor", "Scorpio", "Rumors", "Johnsons", "Leboy"];
 
 const REELS = [
-  { label: "Brand activation crowd shot", file: "reel-activation.jpg" },
-  { label: "On the mic, hyping the room", file: "reel-mc.jpg" },
-  { label: "Hunters Nightclub booth", file: "reel-hunters.jpg" },
-  { label: "Wedding grand entrance", file: "reel-wedding.jpg" },
-  { label: "Behind the scenes / talking to camera", file: "reel-bts.jpg" },
+  { src: "/images/reel-podcast.jpg", cap: "On camera", alt: "Drew hosting a podcast interview on the Xpress set" },
+  { src: "/images/reel-booth.jpg", cap: "In the booth", alt: "Drew in the DJ booth before a club set" },
+  { src: "/images/reel-wedding.jpg", cap: "Running the floor", alt: "Drew on the mic in the middle of a wedding dance floor" },
+  { src: "/images/reel-outdoor.jpg", cap: "Any room, any vibe", alt: "Drew smiling behind the decks at an outdoor night event" },
+  { src: "/images/reel-decks.jpg", cap: "Behind the decks", alt: "Drew smiling behind his DJ setup at a wedding" },
 ];
 
 const icons: Record<string, string> = {
@@ -101,7 +101,7 @@ const I = (name: string) =>
         <div class="hero__photo">
           <div class="hero__sticker">15+ yrs<small>on the mic</small></div>
           <div class="hero__frame">
-            <img src="/images/drew-on-the-mic.jpg" alt="DJ Drew Segura on the mic, hyping up the crowd" width="2560" height="1440" fetchpriority="high" />
+            <img src="/images/hero-drew.jpg" alt="DJ Drew Segura in a black suit, arms crossed" width="1024" height="1536" fetchpriority="high" />
           </div>
         </div>
       </div>
@@ -124,7 +124,7 @@ const I = (name: string) =>
       <div class="wrap">
         <div class="about__intro">
           <div class="about__portrait rv">
-            <Shot ratio="4 / 5" label="Your best portrait: you, the face of the brand" file="drew-portrait.jpg" />
+            <Shot ratio="4 / 5" src="/images/about-drew.jpg" label="Drew in a suit with DJ headphones on" />
             <div class="about__tag">100% <b>Dominicano</b>, 100% gringo</div>
           </div>
           <div class="about__text rv">
@@ -233,7 +233,7 @@ const I = (name: string) =>
             Weddings are where I built my name. I started Xpress Entertainment in 2016, and our team now plays
             150+ weddings a year across South Florida.
           </p>
-          <Shot ratio="16 / 10" label="Packed wedding dance floor" file="wedding-floor.jpg" />
+          <Shot ratio="16 / 10" src="/images/wedding-mic.jpg" label="Drew on the mic at a garden wedding" class="pos-top" />
           <ul>
             <li>Bilingual MC, so both sides of the family are in on every moment</li>
             <li>Reggaetón, salsa, merengue, 2000s hip-hop, house: one floor, every generation</li>
@@ -252,7 +252,7 @@ const I = (name: string) =>
             I started in clubs on Las Olas at 18. Since then I've played LGBTQ+ venues across the country, and I
             hold a weekly residency at Hunters Nightclub in Wilton Manors.
           </p>
-          <Shot ratio="16 / 10" label="You in the booth at Hunters, lights down" file="nightlife-hunters.jpg" />
+          <Shot ratio="16 / 10" src="/images/nightlife-hunters.jpg" label="Drew on the decks at Hunters Nightclub, Wilton Manors" class="pos-top" />
           <div class="venues">
             <span class="res">Resident · Hunters, Wilton Manors</span>
             {NIGHT_VENUES.map((v) => <span>{v}</span>)}
@@ -281,8 +281,8 @@ const I = (name: string) =>
         <div class="reels">
           {REELS.map((r) => (
             <div class="reel rv">
-              <Shot ratio="9 / 16" label={r.label} file={r.file} />
-              <span class="reel__play"><Fragment set:html={I("play")} /></span>
+              <Shot ratio="9 / 16" src={r.src} label={r.alt} />
+              <span class="reel__cap">{r.cap}</span>
             </div>
           ))}
         </div>

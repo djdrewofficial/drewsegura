@@ -437,3 +437,7 @@ p { margin: 0 0 1em; }
 .reel .shot { align-items: end; }
 .reel .shot__label { padding-bottom: 22px; }
 @media (max-width: 560px) { .about__tag { right: 8px; font-size: 20px; } }
+.hero__frame { background: #fff; }
+.hero__frame img { object-position: 50% 12%; }
+.shot.pos-top img { object-position: 50% 22%; }
+.reel__cap { position: absolute; left: 12px; bottom: 12px; background: var(--noche); color: var(--pink); font-weight: 800; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; padding: 7px 12px; border-radius: 999px; }
