@@ -195,3 +195,46 @@ a.reel .reel__cap { z-index: 1; }
 .reel-modal__open { display: grid; place-items: center; height: 46px; background: var(--noche); color: var(--pink); font-weight: 800; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; }
 .reel-modal__close { position: absolute; top: 8px; right: 8px; z-index: 2; width: 38px; height: 38px; border-radius: 50%; border: 0; background: var(--noche); color: var(--blanco); font-size: 24px; line-height: 1; cursor: pointer; }
 .reel-modal__close:focus-visible { outline: 3px solid var(--mango); outline-offset: 2px; }
+
+/* ---------- mixes page ---------- */
+.genre-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.genre-nav a { display: inline-flex; align-items: center; gap: 10px; padding: 11px 18px; border-radius: 999px; border: 2px solid var(--pink); color: var(--blanco); text-decoration: none; font-weight: 800; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; transition: background .15s, color .15s; }
+.genre-nav a span { background: var(--pink); color: var(--noche); border-radius: 999px; min-width: 24px; height: 24px; display: grid; place-items: center; font-size: 12px; }
+.genre-nav a:hover { background: var(--pink); color: var(--noche); }
+.genre-nav a:hover span { background: var(--noche); color: var(--pink); }
+.mixsec { scroll-margin-top: 70px; }
+.mixsec__head { display: grid; grid-template-columns: 1fr .8fr; gap: 32px; align-items: end; margin-bottom: 44px; }
+.mixsec__head .kicker { display: block; margin-bottom: 12px; color: var(--pink-deep); }
+.brands .mixsec__head .kicker { color: var(--pink); }
+.mixsec__head .script { color: var(--pink-deep); }
+.brands .mixsec__head .script { color: var(--pink); }
+.brands .mixsec__head .lead { color: rgba(255, 246, 250, .8); }
+.mixes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.mix { background: #fff; border: 2px solid var(--noche); border-radius: var(--r); overflow: hidden; transition: transform .2s, box-shadow .2s; }
+.mix:hover { transform: translateY(-4px); box-shadow: 10px 10px 0 var(--pink); }
+.brands .mix { background: var(--noche-2); border-color: rgba(255, 45, 135, .35); color: var(--blanco); }
+.mix__art { position: relative; display: block; aspect-ratio: 16 / 9; background: var(--noche); overflow: hidden; }
+.mix__art img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+.mix__art:hover img { transform: scale(1.04); }
+.mix__art:focus-visible { outline: 3px solid var(--mango); outline-offset: -3px; }
+.mix__art iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; z-index: 3; }
+.mix__play { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 62px; height: 62px; border-radius: 50%; background: var(--pink); color: var(--noche); display: grid; place-items: center; box-shadow: 0 6px 24px rgba(0, 0, 0, .35); transition: transform .2s; }
+.mix__play svg { width: 24px; height: 24px; margin-left: 3px; }
+.mix__art:hover .mix__play { transform: scale(1.1); }
+.mix__body { padding: 18px 20px 20px; }
+.mix__body h3 { font-family: var(--f-display); text-transform: uppercase; font-size: 24px; line-height: 1.05; margin-bottom: 8px; }
+.mix__body p { font-size: 14.5px; margin: 0 0 10px; opacity: .85; }
+.mix__meta { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--pink-deep); }
+.brands .mix__meta { color: var(--pink); }
+@media (max-width: 980px) { .mixes { grid-template-columns: 1fr 1fr; } .mixsec__head { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .mixes { grid-template-columns: 1fr; } }
+
+/* sticky Mixcloud player */
+.mixbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; background: var(--noche); border-top: 3px solid var(--pink); box-shadow: 0 -8px 30px rgba(0, 0, 0, .4); }
+.mixbar__in { display: flex; align-items: center; gap: 14px; width: min(100% - 2 * var(--gutter), var(--wrap)); margin-inline: auto; padding: 8px 0; }
+.mixbar__label { flex: none; font-family: var(--f-script); color: var(--pink); font-size: 20px; }
+.mixbar iframe { flex: 1; height: 60px; border: 0; min-width: 0; }
+.mixbar__close { flex: none; width: 38px; height: 38px; border-radius: 50%; border: 0; background: var(--pink); color: var(--noche); font-size: 24px; line-height: 1; cursor: pointer; }
+body.has-mixbar { padding-bottom: 84px; }
+@media (max-width: 600px) { .mixbar__label { display: none; } }
+.mixsec__head .h2 .script { display: block; font-size: .5em; margin-top: 8px; }

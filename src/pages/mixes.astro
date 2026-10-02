@@ -1,0 +1,133 @@
+---
+import Brand from "../layouts/Brand.astro";
+import PageHero from "../components/PageHero.astro";
+import BookBand from "../components/BookBand.astro";
+import { GENRES_MIXES } from "../lib/mixes";
+import { SOCIALS } from "../lib/site";
+import { icon } from "../lib/icons";
+
+const urlOf = (m: { mixcloud?: string; youtube?: string }) =>
+  m.mixcloud ? `https://www.mixcloud.com${m.mixcloud}` : `https://www.youtube.com/watch?v=${m.youtube}`;
+const follow = SOCIALS.filter((s) => ["mc", "yt", "sc"].includes(s.icon));
+const total = GENRES_MIXES.reduce((n, g) => n + g.mixes.length, 0);
+---
+<Brand
+  title="DJ Mixes | Latin, Hip-Hop & R&B, EDM & House, Live Sets | DJ Drew Segura"
+  description="Listen to DJ Drew Segura's mixes and live sets: Latin (reggaetón, merengue, dembow, salsa), 2000s hip-hop & R&B, EDM & house, and live club and wedding sets."
+  navLight
+>
+  <PageHero
+    tone="dark"
+    kicker="Mixes · Sets · En vivo"
+    title="Press<br/><span class='pink'>play.</span>"
+    script="pa' que bailes"
+    lead={`${total} mixes and live sets, sorted by vibe. Hit play and the music keeps going while you browse.`}
+  >
+    <nav class="genre-nav" aria-label="Genres">
+      {GENRES_MIXES.map((g) => <a href={`#${g.id}`}>{g.name}<span>{g.mixes.length}</span></a>)}
+    </nav>
+  </PageHero>
+
+  {GENRES_MIXES.map((g, gi) => (
+    <section class={`section mixsec ${gi % 2 ? "brands" : "section--light"}`} id={g.id}>
+      <div class="wrap">
+        <div class="mixsec__head rv">
+          <div>
+            <span class="kicker">{String(gi + 1).padStart(2, "0")} · {g.mixes.length} {g.mixes.length === 1 ? "mix" : "mixes"}</span>
+            <h2 class="display h2">{g.name} <span class="script">{g.script}</span></h2>
+          </div>
+          <p class="lead">{g.blurb}</p>
+        </div>
+        <div class="mixes">
+          {g.mixes.map((m) => (
+            <article class="mix rv">
+              <a class="mix__art" href={urlOf(m)} target="_blank" rel="noopener"
+                 data-mc={m.mixcloud} data-yt={m.youtube} data-title={m.title} aria-label={`Play ${m.title}`}>
+                <img src={m.img} alt="" loading="lazy" width="960" height="540" />
+                <span class="reel__badge"><Fragment set:html={icon(m.mixcloud ? "mc" : "yt")} />{m.mixcloud ? "Mixcloud" : "YouTube"}</span>
+                <span class="mix__play" aria-hidden="true"><Fragment set:html={icon("play")} /></span>
+              </a>
+              <div class="mix__body">
+                <h3>{m.title}</h3>
+                <p>{m.sub}</p>
+                <span class="mix__meta">{[m.length, m.year, m.mixcloud ? "Audio" : "Video"].filter(Boolean).join(" · ")}</span>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="section section--pink">
+    <div class="wrap listen rv">
+      <div>
+        <span class="kicker" style="color:var(--blanco)">Never miss a set</span>
+        <h2 class="display h2" style="margin-top:14px">Follow along.</h2>
+      </div>
+      <div class="socials">
+        {follow.map((s) => (
+          <a class="social" href={s.href} target="_blank" rel="noopener"><Fragment set:html={icon(s.icon)} />{s.label}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <BookBand title="Want this live?" text="Like what you hear? Let's put it in your room: club night, activation or wedding." />
+
+  <!-- persistent Mixcloud player -->
+  <div class="mixbar" hidden>
+    <div class="mixbar__in">
+      <span class="mixbar__label">Now playing</span>
+      <iframe title="Mixcloud player" allow="autoplay"></iframe>
+      <button class="mixbar__close" type="button" aria-label="Close player">×</button>
+    </div>
+  </div>
+</Brand>
+
+<script>
+  const bar = document.querySelector<HTMLElement>(".mixbar");
+  const barFrame = bar?.querySelector("iframe");
+  let activeVideo: HTMLAnchorElement | null = null;
+
+  const stopVideo = () => {
+    if (!activeVideo) return;
+    activeVideo.querySelector("iframe")?.remove();
+    activeVideo.classList.remove("is-playing");
+    activeVideo = null;
+  };
+  const stopBar = () => {
+    if (!bar || !barFrame) return;
+    barFrame.src = "about:blank";
+    bar.hidden = true;
+    document.body.classList.remove("has-mixbar");
+  };
+
+  document.querySelectorAll<HTMLAnchorElement>(".mix__art").forEach((a) => {
+    a.addEventListener("click", (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+      const { mc, yt } = a.dataset;
+      if (mc && bar && barFrame) {
+        e.preventDefault();
+        stopVideo();
+        barFrame.src = `https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&mini=1&light=0&autoplay=1&feed=${encodeURIComponent(mc)}`;
+        bar.hidden = false;
+        document.body.classList.add("has-mixbar");
+      } else if (yt) {
+        e.preventDefault();
+        if (activeVideo === a) return;
+        stopVideo();
+        stopBar();
+        const f = document.createElement("iframe");
+        f.src = `https://www.youtube-nocookie.com/embed/${yt}?autoplay=1&rel=0`;
+        f.title = a.dataset.title ?? "Video";
+        f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+        f.allowFullscreen = true;
+        a.appendChild(f);
+        a.classList.add("is-playing");
+        activeVideo = a;
+      }
+    });
+  });
+  bar?.querySelector(".mixbar__close")?.addEventListener("click", stopBar);
+</script>

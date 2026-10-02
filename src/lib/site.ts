@@ -30,6 +30,7 @@ export const NAV = [
   { href: "/brands", label: "Brands" },
   { href: "/weddings", label: "Weddings" },
   { href: "/nightlife", label: "Nightlife" },
+  { href: "/mixes", label: "Mixes" },
 ];
 
 export const GENRES = [

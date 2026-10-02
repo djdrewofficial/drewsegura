@@ -88,6 +88,7 @@ const mixes = SOCIALS.filter((s) => ["mc", "sc", "yt"].includes(s.icon));
         <h2 class="display h2" style="margin-top:14px">Hear a set.</h2>
       </div>
       <div class="socials">
+        <a class="social" href="/mixes"><Fragment set:html={icon("music")} />All my mixes</a>
         {mixes.map((s) => (
           <a class="social" href={s.href} target="_blank" rel="noopener"><Fragment set:html={icon(s.icon)} />{s.label}</a>
         ))}
