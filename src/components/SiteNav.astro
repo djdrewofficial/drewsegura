@@ -1,0 +1,22 @@
+---
+import { NAV } from "../lib/site";
+/** `light` = white text before scroll (for dark/green heroes); default is dark text on pink. */
+interface Props { light?: boolean; }
+const { light = false } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+<header class={`nav ${light ? "nav--light" : ""}`}>
+  <div class="wrap nav__in">
+    <a class="nav__logo" href="/" aria-label="DJ Drew Segura home">Drew<span>.</span>Segura</a>
+    <ul class="nav__links" id="nav-links">
+      {NAV.map((n) => (
+        <li><a href={n.href} aria-current={path === n.href ? "page" : undefined}>{n.label}</a></li>
+      ))}
+      <li class="nav__mobile-cta"><a href="/book">Book Drew</a></li>
+    </ul>
+    <a class="btn btn--dark nav__cta" href="/book">Book Drew</a>
+    <button class="nav__toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+    </button>
+  </div>
+</header>

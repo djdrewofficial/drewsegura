@@ -1,0 +1,19 @@
+---
+/** Accordion FAQ + FAQPage structured data. */
+interface Props { items: { q: string; a: string }[]; id?: string; }
+const { items, id = "faq" } = Astro.props;
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+};
+---
+<div class="faq" id={id}>
+  {items.map((f, i) => (
+    <details class="faq__item rv" open={i === 0}>
+      <summary><span>{f.q}</span><i aria-hidden="true"></i></summary>
+      <p>{f.a}</p>
+    </details>
+  ))}
+</div>
+<script type="application/ld+json" set:html={JSON.stringify(ld)} />

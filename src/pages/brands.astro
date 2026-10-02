@@ -1,0 +1,129 @@
+---
+import Brand from "../layouts/Brand.astro";
+import PageHero from "../components/PageHero.astro";
+import BookBand from "../components/BookBand.astro";
+import Faq from "../components/Faq.astro";
+import Shot from "../components/Shot.astro";
+import { BRAND_FAQS } from "../lib/site";
+import { icon } from "../lib/icons";
+
+const services = [
+  { icon: "mic", h: "MC & Host",
+    p: "I'm the voice of your event. I welcome the crowd, run giveaways and moments, introduce talent, and keep the run of show on time.",
+    li: ["Bilingual EN / ES hosting", "Stage, giveaway and crowd moments", "Scripted talking points, delivered naturally"] },
+  { icon: "decks", h: "DJ Sets",
+    p: "Open-format sets built around your brand and your audience. I read the room live and keep people there.",
+    li: ["Latin, hip-hop, house, throwbacks, Top 40", "Clean edits for family and corporate crowds", "Sound and lighting through Xpress if you need it"] },
+  { icon: "cam", h: "Content Creation",
+    p: "I capture your activation while it's happening, then post it to people who already follow me.",
+    li: ["Reels, TikToks and stories from the event", "Behind-the-scenes and talking-to-camera", "Approvals and usage agreed up front"] },
+  { icon: "bolt", h: "The Full Package",
+    p: "DJ, MC and creator in one booking. One person owns the energy in the room and the content that comes out of it.",
+    li: ["One point of contact", "Music, mic and content all on-brand", "Fewer vendors to manage"] },
+];
+
+const steps = [
+  { h: "Tell me the goal", p: "Launch, foot traffic, sign-ups, buzz? Send me the brand, date, venue and audience." },
+  { h: "We plan the run of show", p: "Music direction, mic moments, talking points, and the content we want to walk away with." },
+  { h: "I run the room", p: "On-site early, soundchecked, and on the mic keeping the crowd engaged from open to close." },
+  { h: "The content goes out", p: "Reels and posts go live on the schedule we agreed, so the event keeps working after it ends." },
+];
+
+const usecases = ["Brand activations", "Product launches", "Pop-ups", "Store openings", "Festivals", "Corporate events", "Sports & halftime", "Galas & fundraisers", "Social campaigns", "Grand openings", "Influencer events", "Holiday parties"];
+---
+<Brand
+  title="Brand Activations, Event MC & DJ | DJ Drew Segura, Miami"
+  description="Book DJ Drew Segura, El Gringo Dominicano, as a bilingual MC, DJ and content creator for brand activations, launches, pop-ups, festivals and corporate events in Miami and South Florida."
+  navLight
+>
+  <PageHero
+    tone="dark"
+    kicker="Brands · Agencies · Activations"
+    title="Your brand.<br/><span class='pink'>My mic.</span>"
+    script="Everybody's watching."
+    lead="A bilingual MC, DJ and content creator in one booking. I pull people in, keep them there, and make sure the internet sees it."
+    img="/images/brands-drew.jpg"
+    imgAlt="Drew Segura smiling at an event in front of a geometric backdrop"
+    imgPos="45% 30%"
+  >
+    <div class="phero__ctas">
+      <a class="btn btn--pink" href="/book?type=brand">Get a quote <Fragment set:html={icon("arrow")} /></a>
+      <a class="btn btn--ghost" href="#how">How it works</a>
+    </div>
+  </PageHero>
+
+  <section class="section section--light">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="kicker">What I bring</span>
+        <h2 class="display h2">Pick one.<br /><span class="script">or get all of it.</span></h2>
+      </div>
+      <div class="svc">
+        {services.map((s) => (
+          <article class="svc__card rv">
+            <div class="offer__icon"><Fragment set:html={icon(s.icon)} /></div>
+            <h3>{s.h}</h3>
+            <p>{s.p}</p>
+            <ul>{s.li.map((l) => <li><Fragment set:html={icon("check")} />{l}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--pink">
+    <div class="wrap split">
+      <div class="rv">
+        <span class="kicker" style="color:var(--blanco)">Why a creator-MC</span>
+        <h2 class="display h2" style="margin:14px 0 24px">Not just<br />background<br />music.</h2>
+        <p class="lead">
+          Most activations hire a DJ for sound and hope the crowd shows up. I started as a live-stream creator,
+          so I think about the moment and the camera at the same time: what pulls people in, what makes them
+          stay, and what makes them pull their phone out.
+        </p>
+        <p>
+          And in South Florida, half your crowd might be more comfortable in Spanish. I host in both, so your
+          message lands with everyone.
+        </p>
+      </div>
+      <div class="rv">
+        <Shot ratio="4 / 5" src="/images/story-live.jpg" label="Drew hosting an interview on the Xpress podcast set" class="split__img" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section brands" id="how">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="kicker">How it works</span>
+        <h2 class="display h2">Four steps.<br /><span class="pink">Zero stress.</span></h2>
+      </div>
+      <ol class="steps">
+        {steps.map((s, i) => (
+          <li class="rv"><span class="steps__n">0{i + 1}</span><h3>{s.h}</h3><p>{s.p}</p></li>
+        ))}
+      </ol>
+      <div class="usecases rv" style="margin-top:56px">
+        {usecases.map((u) => <span>{u}</span>)}
+      </div>
+      <div class="logos rv">
+        <span class="kicker">Brands I've worked with</span>
+        <div class="logos__row">
+          {Array.from({ length: 6 }).map(() => <div class="logos__slot">Brand logo</div>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--light">
+    <div class="wrap faq-wrap">
+      <div class="sec-head rv">
+        <span class="kicker">Questions</span>
+        <h2 class="display h2">Brand <span class="script">FAQ</span></h2>
+      </div>
+      <Faq items={BRAND_FAQS} />
+    </div>
+  </section>
+
+  <BookBand title="Let's activate." text="Send me the brand, date and venue. I'll come back with ideas and a quote, usually the same day." type="brand" />
+</Brand>

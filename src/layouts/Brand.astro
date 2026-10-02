@@ -1,15 +1,20 @@
 ---
 import "../styles/brand.css";
+import "../styles/pages.css";
+import SiteNav from "../components/SiteNav.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 
 interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  navLight?: boolean;
 }
 const {
   title = "DJ Drew Segura | El Gringo Dominicano | DJ, MC & Content Creator, Miami",
   description = "DJ Drew Segura, El Gringo Dominicano: bilingual DJ, MC and content creator for brand activations, nightclubs and weddings across Miami, Fort Lauderdale and beyond.",
-  ogImage = "/og.svg",
+  ogImage = "/og.png",
+  navLight = false,
 } = Astro.props;
 
 const site = Astro.site ?? new URL("https://djdrewofficial.com");
@@ -56,6 +61,7 @@ const ld = {
     <meta property="og:image" content={ogAbs} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogAbs} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -68,7 +74,11 @@ const ld = {
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
-    <slot />
+    <SiteNav light={navLight} />
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter />
     <script>
       // nav: solid background once you leave the hero, mobile toggle
       const nav = document.querySelector<HTMLElement>(".nav");

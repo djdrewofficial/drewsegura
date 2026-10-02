@@ -1,0 +1,33 @@
+---
+import Brand from "../layouts/Brand.astro";
+import Frond from "../components/Frond.astro";
+import LeadForm from "../components/LeadForm.astro";
+import { CONTACT } from "../lib/site";
+import { icon } from "../lib/icons";
+---
+<Brand
+  title="Book DJ Drew Segura | Check Availability"
+  description="Book DJ Drew Segura for your brand activation, club night or wedding. Send your date and details, or text 954-233-0698."
+  navLight
+>
+  <section class="section book book--page">
+    <Frond class="f-book1 sway sway--slow" />
+    <Frond class="f-book2" />
+    <div class="wrap book__grid">
+      <div>
+        <span class="kicker" style="color:var(--pink)">Book Drew</span>
+        <h1 class="display"><span class="script">¿Qué lo que?</span>Let's work.</h1>
+        <p class="lead" style="margin-top:24px; color:rgba(255,246,250,.82)">
+          Brand activation, club night, wedding, or something I haven't thought of yet: tell me about it.
+          I answer personally, usually the same day.
+        </p>
+        <div class="book__direct">
+          <a href={`sms:${CONTACT.phoneSms}`}><Fragment set:html={icon("chat")} />Text me · {CONTACT.phoneDisplay}</a>
+          <a href={`tel:${CONTACT.phoneDial}`}><Fragment set:html={icon("phone")} />Call · {CONTACT.phoneDisplay}</a>
+          <a href={`mailto:${CONTACT.email}`}><Fragment set:html={icon("mail")} />{CONTACT.email}</a>
+        </div>
+      </div>
+      <LeadForm title="Tell me about it" />
+    </div>
+  </section>
+</Brand>

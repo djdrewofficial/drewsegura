@@ -1,0 +1,109 @@
+---
+import { EVENT_TYPES, LEAD_CONSENT, CONTACT } from "../lib/site";
+import { icon } from "../lib/icons";
+/** Booking inquiry form → POST /api/lead (Cloudflare Pages Function → GoHighLevel). */
+interface Props { title?: string; }
+const { title = "Book Drew" } = Astro.props;
+---
+<form class="form lead-form" novalidate>
+  <h3>{title}</h3>
+  <fieldset>
+    <legend>What are we doing?</legend>
+    <div class="types">
+      {EVENT_TYPES.map((t, i) => (
+        <label><input type="radio" name="eventType" value={t.value} checked={i === 0} /><span>{t.label}</span></label>
+      ))}
+    </div>
+  </fieldset>
+  <div class="row">
+    <div class="field"><label for="lf-name">Name</label><input id="lf-name" name="name" type="text" autocomplete="name" required /></div>
+    <div class="field"><label for="lf-date">Date</label><input id="lf-date" name="eventDate" type="date" /></div>
+  </div>
+  <div class="row">
+    <div class="field"><label for="lf-email">Email</label><input id="lf-email" name="email" type="email" autocomplete="email" required /></div>
+    <div class="field"><label for="lf-phone">Phone</label><input id="lf-phone" name="phone" type="tel" autocomplete="tel" required /></div>
+  </div>
+  <div class="field"><label for="lf-org" data-org-label>Brand / company</label><input id="lf-org" name="venueName" type="text" /></div>
+  <div class="field"><label for="lf-msg">Tell me about it</label><textarea id="lf-msg" name="notes" placeholder="Venue, crowd size, the vibe you want…"></textarea></div>
+  <label class="consent"><input type="checkbox" name="smsConsent" /><span>{LEAD_CONSENT}</span></label>
+  <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+  <button class="btn btn--pink" type="submit">Send it <Fragment set:html={icon("arrow")} /></button>
+  <p class="form__msg" role="status" aria-live="polite" hidden></p>
+  <div class="form__done" hidden>
+    <span class="script">¡Gracias!</span>
+    <p>Got it. I'll get back to you personally, usually the same day. If it's urgent, text me at <a href={`sms:${CONTACT.phoneSms}`}>{CONTACT.phoneDisplay}</a>.</p>
+  </div>
+</form>
+
+<script>
+  const ORG_LABEL: Record<string, string> = {
+    brand: "Brand / company",
+    nightlife: "Venue / promoter",
+    wedding: "Venue",
+    other: "Organization / venue",
+  };
+
+  document.querySelectorAll<HTMLFormElement>(".lead-form").forEach((form) => {
+    const msg = form.querySelector<HTMLElement>(".form__msg")!;
+    const done = form.querySelector<HTMLElement>(".form__done")!;
+    const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const orgLabel = form.querySelector<HTMLElement>("[data-org-label]");
+
+    const syncLabel = () => {
+      const v = (form.querySelector<HTMLInputElement>('input[name="eventType"]:checked')?.value) ?? "brand";
+      if (orgLabel) orgLabel.textContent = ORG_LABEL[v] ?? ORG_LABEL.other;
+    };
+    // ?type=wedding etc. pre-selects the event type
+    const pre = new URLSearchParams(location.search).get("type");
+    const preInput = pre && form.querySelector<HTMLInputElement>(`input[name="eventType"][value="${CSS.escape(pre)}"]`);
+    if (preInput) preInput.checked = true;
+    syncLabel();
+    form.addEventListener("change", syncLabel);
+
+    const say = (t: string) => { msg.textContent = t; msg.hidden = false; };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const name = String(fd.get("name") ?? "").trim();
+      const email = String(fd.get("email") ?? "").trim();
+      const phone = String(fd.get("phone") ?? "").trim();
+      if (!name || !email || !phone) return say("Please add your name, email and phone so I can reach you.");
+      if (!/^\S+@\S+\.\S+$/.test(email)) return say("That email doesn't look right. Mind checking it?");
+
+      const [firstName, ...rest] = name.split(/\s+/);
+      const payload = {
+        firstName,
+        lastName: rest.join(" "),
+        email,
+        phone,
+        eventType: fd.get("eventType"),
+        eventDate: fd.get("eventDate"),
+        venueName: fd.get("venueName"),
+        notes: fd.get("notes"),
+        smsConsent: fd.get("smsConsent") === "on",
+        consentText: form.querySelector(".consent span")?.textContent ?? "",
+        website: fd.get("website"),
+        sourcePage: location.pathname,
+      };
+
+      btn.disabled = true;
+      msg.hidden = true;
+      try {
+        const res = await fetch("/api/lead", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const out = await res.json().catch(() => ({}));
+        if (!res.ok || !out.ok) throw new Error(out.error || "Something went wrong.");
+        form.querySelectorAll(":scope > :not(.form__done)").forEach((el) => ((el as HTMLElement).hidden = true));
+        done.hidden = false;
+        (window as any).gtag?.("event", "generate_lead", { event_type: payload.eventType });
+      } catch (err) {
+        say(`${(err as Error).message} You can also text me at 954-233-0698.`);
+        btn.disabled = false;
+      }
+    });
+  });
+</script>

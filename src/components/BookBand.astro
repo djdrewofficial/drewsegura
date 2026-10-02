@@ -1,0 +1,28 @@
+---
+import Frond from "./Frond.astro";
+import { CONTACT } from "../lib/site";
+import { icon } from "../lib/icons";
+/** Closing call-to-action band. `type` pre-selects the event type on /book. */
+interface Props { title?: string; script?: string; text?: string; type?: string; }
+const {
+  title = "Let's work.",
+  script = "¿Qué lo que?",
+  text = "Tell me what you're planning. I answer personally, usually the same day.",
+  type,
+} = Astro.props;
+const href = type ? `/book?type=${type}` : "/book";
+---
+<section class="band">
+  <Frond class="bf1 sway sway--slow" />
+  <Frond class="bf2" />
+  <div class="wrap band__in">
+    <div>
+      <h2 class="display"><span class="script">{script}</span>{title}</h2>
+      <p class="lead">{text}</p>
+    </div>
+    <div class="band__ctas">
+      <a class="btn btn--pink" href={href}>Check my availability <Fragment set:html={icon("arrow")} /></a>
+      <a class="btn btn--ghost" href={`sms:${CONTACT.phoneSms}`}><Fragment set:html={icon("chat")} /> Text {CONTACT.phoneDisplay}</a>
+    </div>
+  </div>
+</section>

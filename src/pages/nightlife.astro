@@ -1,0 +1,99 @@
+---
+import Brand from "../layouts/Brand.astro";
+import PageHero from "../components/PageHero.astro";
+import BookBand from "../components/BookBand.astro";
+import Shot from "../components/Shot.astro";
+import { NIGHT_VENUES, GENRES, SOCIALS } from "../lib/site";
+import { icon } from "../lib/icons";
+
+const mixes = SOCIALS.filter((s) => ["mc", "sc", "yt"].includes(s.icon));
+---
+<Brand
+  title="Nightclub DJ in Fort Lauderdale & Wilton Manors | DJ Drew Segura"
+  description="DJ Drew Segura is a nightclub DJ with a weekly residency at Hunters Nightclub in Wilton Manors. Open-format, Latin and LGBTQ+ nightlife sets across South Florida and the country."
+  navLight
+>
+  <PageHero
+    tone="palm"
+    kicker="Nightlife · Residencies"
+    title="After<br/>dark."
+    script="hasta que salga el sol"
+    lead="I learned to DJ in clubs, and I never stopped. Weekly at Hunters in Wilton Manors, and booking venues, promoters and private parties."
+    img="/images/nightlife-booth.jpg"
+    imgAlt="Drew in the DJ booth, lit in pink, before a club set"
+    imgPos="60% 30%"
+  >
+    <div class="phero__ctas">
+      <a class="btn btn--pink" href="/book?type=nightlife">Book me for your venue <Fragment set:html={icon("arrow")} /></a>
+    </div>
+  </PageHero>
+
+  <section class="section section--light">
+    <div class="wrap split">
+      <div class="rv">
+        <Shot ratio="1 / 1" src="/images/story-nightlife.jpg" label="Drew smiling behind the decks at Hunters Nightclub" class="split__img" />
+      </div>
+      <div class="rv">
+        <span class="kicker" style="color:var(--pink-deep)">The residency</span>
+        <h2 class="display h2" style="margin:14px 0 24px">Every week<br /><span class="script">at Hunters.</span></h2>
+        <p class="lead">
+          My main residency is Hunters Nightclub in Wilton Manors, where I play every week. It's home: a room that
+          wants to sing every word and dance until close.
+        </p>
+        <p>
+          Before Hunters, I came up on Las Olas at 18 with my mentor Frankie P, then played LGBTQ+ venues across
+          the country. No setlist, ever. Just reading the energy and keeping the floor moving.
+        </p>
+        <div class="tags">{NIGHT_VENUES.map((v) => <span>{v}</span>)}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section brands">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <span class="kicker">The sound</span>
+        <h2 class="display h2">Open format.<br /><span class="pink">No borders.</span></h2>
+      </div>
+      <div class="genres genres--big rv">{GENRES.map((g) => <span>{g}</span>)}</div>
+      <div class="offer" style="margin-top:56px">
+        <article class="offer__card rv">
+          <div class="offer__icon"><Fragment set:html={icon("users")} /></div>
+          <h3>Residencies</h3>
+          <p>Weekly or monthly nights where I build a crowd that comes back for the vibe.</p>
+        </article>
+        <article class="offer__card rv">
+          <div class="offer__icon"><Fragment set:html={icon("spark")} /></div>
+          <h3>Guest sets</h3>
+          <p>Headline or support slots for themed nights, Pride events and special parties.</p>
+        </article>
+        <article class="offer__card rv">
+          <div class="offer__icon"><Fragment set:html={icon("mic")} /></div>
+          <h3>Hosting</h3>
+          <p>On the mic for drag brunches, contests and big nights, in English and Spanish.</p>
+        </article>
+        <article class="offer__card rv">
+          <div class="offer__icon"><Fragment set:html={icon("calendar")} /></div>
+          <h3>Private parties</h3>
+          <p>Birthdays, buyouts and after-parties that need real club energy.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--pink">
+    <div class="wrap listen rv">
+      <div>
+        <span class="kicker" style="color:var(--blanco)">Listen</span>
+        <h2 class="display h2" style="margin-top:14px">Hear a set.</h2>
+      </div>
+      <div class="socials">
+        {mixes.map((s) => (
+          <a class="social" href={s.href} target="_blank" rel="noopener"><Fragment set:html={icon(s.icon)} />{s.label}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <BookBand title="Let's fill your floor." text="Venue, promoter or private party? Send me the night and the crowd, and let's talk." type="nightlife" />
+</Brand>

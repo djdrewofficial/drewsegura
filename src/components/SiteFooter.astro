@@ -1,0 +1,36 @@
+---
+import { CONTACT, NAV, SOCIALS } from "../lib/site";
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__big">Drew Segura <span class="script">El Gringo Dominicano</span></div>
+    <div class="footer__cols">
+      <nav aria-label="Footer">
+        <span class="kicker">Explore</span>
+        <ul>
+          {NAV.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+          <li><a href="/book">Book Drew</a></li>
+        </ul>
+      </nav>
+      <div>
+        <span class="kicker">Follow</span>
+        <ul>
+          {SOCIALS.map((s) => <li><a href={s.href} target="_blank" rel="noopener">{s.label}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <span class="kicker">Talk to me</span>
+        <ul>
+          <li><a href={`sms:${CONTACT.phoneSms}`}>Text {CONTACT.phoneDisplay}</a></li>
+          <li><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
+          <li>Miami · Fort Lauderdale · South Florida</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__row">
+      <span>© {year} Drew Segura · DJ · MC · Content Creator</span>
+      <span>Founder, <a href={CONTACT.companyUrl}>{CONTACT.company}</a></span>
+    </div>
+  </div>
+</footer>

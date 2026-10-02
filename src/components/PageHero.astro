@@ -1,0 +1,36 @@
+---
+import Frond from "./Frond.astro";
+/**
+ * Inner-page hero. `tone` picks the background; the default slot holds
+ * extra content under the lead (buttons, chips).
+ */
+interface Props {
+  tone?: "pink" | "dark" | "palm";
+  kicker: string;
+  title: string;
+  script?: string;
+  lead?: string;
+  img?: string;
+  imgAlt?: string;
+  imgPos?: string;
+}
+const { tone = "pink", kicker, title, script, lead, img, imgAlt = "", imgPos = "50% 30%" } = Astro.props;
+---
+<section class={`phero phero--${tone} ${img ? "phero--img" : ""}`}>
+  <Frond class="pf1 sway sway--slow" />
+  <Frond class="pf2 sway" leaflets={18} />
+  <div class="wrap phero__grid">
+    <div class="phero__copy">
+      <span class="kicker phero__kicker">{kicker}</span>
+      <h1 class="display"><Fragment set:html={title} /></h1>
+      {script && <p class="script phero__script">{script}</p>}
+      {lead && <p class="lead phero__lead">{lead}</p>}
+      <slot />
+    </div>
+    {img && (
+      <div class="phero__photo">
+        <img src={img} alt={imgAlt} style={`object-position:${imgPos}`} fetchpriority="high" />
+      </div>
+    )}
+  </div>
+</section>

@@ -2,15 +2,9 @@
 import Brand from "../layouts/Brand.astro";
 import Frond from "../components/Frond.astro";
 import Shot from "../components/Shot.astro";
-import { CONTACT, SOCIALS } from "../lib/site";
-
-const NAV = [
-  { href: "#about", label: "About" },
-  { href: "#brands", label: "Brands" },
-  { href: "#weddings", label: "Weddings" },
-  { href: "#nightlife", label: "Nightlife" },
-  { href: "#content", label: "Content" },
-];
+import LeadForm from "../components/LeadForm.astro";
+import { CONTACT, SOCIALS, NIGHT_VENUES } from "../lib/site";
+import { icon as I } from "../lib/icons";
 
 const TICKER = ["DJ", "MC", "Content Creator", "Host", "English", "Español", "Miami", "Fort Lauderdale", "Everywhere"];
 
@@ -30,8 +24,6 @@ const OFFER = [
 
 const USECASES = ["Brand activations", "Product launches", "Pop-ups", "Store openings", "Festivals", "Corporate events", "Sports & halftime", "Galas", "Social campaigns"];
 
-const NIGHT_VENUES = ["Vibe Las Olas", "American Social", "The Manor", "Scorpio", "Rumors", "Johnsons", "Leboy"];
-
 const REELS = [
   { src: "/images/reel-podcast.jpg", cap: "On camera", alt: "Drew hosting a podcast interview on the Xpress set" },
   { src: "/images/reel-booth.jpg", cap: "In the booth", alt: "Drew in the DJ booth before a club set" },
@@ -39,319 +31,241 @@ const REELS = [
   { src: "/images/reel-outdoor.jpg", cap: "Any room, any vibe", alt: "Drew smiling behind the decks at an outdoor night event" },
   { src: "/images/reel-decks.jpg", cap: "Behind the decks", alt: "Drew smiling behind his DJ setup at a wedding" },
 ];
-
-const icons: Record<string, string> = {
-  mic: '<path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3M8 21h8"/>',
-  decks: '<circle cx="8" cy="12" r="5"/><circle cx="8" cy="12" r="1.2"/><path d="M15 6h6v12h-6zM18 9v3"/>',
-  cam: '<rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/>',
-  bolt: '<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
-  phone: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/>',
-  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
-  chat: '<path d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-6.4A8 8 0 1 1 21 12Z"/>',
-  arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
-  play: '<path d="M7 4v16l13-8z" fill="currentColor" stroke="none"/>',
-  ig: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/>',
-  tt: '<path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5M14 3c.4 2.6 2.2 4.4 5 4.6"/>',
-  yt: '<rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="m10 9.5 5 2.5-5 2.5z" fill="currentColor"/>',
-  sc: '<path d="M3 16v-3M6 17v-6M9 17V9M12 17V7c3 0 5 2 5.5 4.2A2.9 2.9 0 0 1 21 14a3 3 0 0 1-3 3h-6"/>',
-  mc: '<path d="M3 17V8l4.5 6L12 8v9M15 12.5a3 3 0 0 1 6 0V17"/>',
-};
-const I = (name: string) =>
-  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name]}</svg>`;
 ---
 <Brand>
-  <header class="nav">
-    <div class="wrap nav__in">
-      <a class="nav__logo" href="/">Drew<span>.</span>Segura</a>
-      <ul class="nav__links" id="nav-links">
-        {NAV.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
-      </ul>
-      <a class="btn btn--dark nav__cta" href="#book">Book Drew</a>
-      <button class="nav__toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
-      </button>
-    </div>
-  </header>
-
-  <main id="main">
-    <!-- ================= HERO ================= -->
-    <section class="hero">
-      <Frond class="f1 sway" />
-      <Frond class="f2 sway sway--slow" />
-      <Frond class="f3 sway" leaflets={18} />
-      <div class="wrap hero__grid">
-        <div class="hero__copy">
-          <span class="kicker hero__kicker">DJ · MC · Content Creator</span>
-          <h1 class="display">DJ Drew<br /><span class="outline">Segura</span></h1>
-          <p class="hero__persona script">El Gringo Dominicano</p>
-          <div class="hero__roles">
-            <span class="chip chip--solid">Brands & Activations</span>
-            <span class="chip">Nightlife</span>
-            <span class="chip">Weddings</span>
-          </div>
-          <p class="hero__lead">
-            I'm the guy you book when the room has to feel it. I DJ, I run the mic, and I make content
-            people actually watch, in English <em>y en español.</em>
-          </p>
-          <div class="hero__ctas">
-            <a class="btn btn--dark" href="#book">Book me for your brand <Fragment set:html={I("arrow")} /></a>
-            <a class="btn btn--ghost" href="#about">Meet the Gringo</a>
-          </div>
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <Frond class="f1 sway" />
+    <Frond class="f2 sway sway--slow" />
+    <Frond class="f3 sway" leaflets={18} />
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <span class="kicker hero__kicker">DJ · MC · Content Creator</span>
+        <h1 class="display">DJ Drew<br /><span class="outline">Segura</span></h1>
+        <p class="hero__persona script">El Gringo Dominicano</p>
+        <div class="hero__roles">
+          <a class="chip chip--solid" href="/brands">Brands & Activations</a>
+          <a class="chip" href="/nightlife">Nightlife</a>
+          <a class="chip" href="/weddings">Weddings</a>
         </div>
-        <div class="hero__photo">
-          <div class="hero__sticker">15+ yrs<small>on the mic</small></div>
-          <div class="hero__frame">
-            <img src="/images/hero-drew.jpg" alt="DJ Drew Segura in a black suit, arms crossed" width="1024" height="1536" fetchpriority="high" />
+        <p class="hero__lead">
+          I'm the guy you book when the room has to feel it. I DJ, I run the mic, and I make content
+          people actually watch, in English <em>y en español.</em>
+        </p>
+        <div class="hero__ctas">
+          <a class="btn btn--dark" href="/book?type=brand">Book me for your brand <Fragment set:html={I("arrow")} /></a>
+          <a class="btn btn--ghost" href="/about">Meet the Gringo</a>
+        </div>
+      </div>
+      <div class="hero__photo">
+        <div class="hero__sticker">15+ yrs<small>on the mic</small></div>
+        <div class="hero__frame">
+          <img src="/images/hero-drew.jpg" alt="DJ Drew Segura in a black suit, arms crossed" width="1024" height="1536" fetchpriority="high" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TICKER ================= -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      {[0, 1].map(() => (
+        <div class="marquee__group">
+          {TICKER.map((t) => (<><span>{t}</span><span class="star">✦</span></>))}
+          <span class="es">¿Qué lo que?</span><span class="star">✦</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="section section--light" id="about">
+    <div class="wrap">
+      <div class="about__intro">
+        <div class="about__portrait rv">
+          <Shot ratio="4 / 5" src="/images/about-drew.jpg" label="Drew in a suit with DJ headphones on" />
+          <div class="about__tag">100% <b>Dominicano</b>, 100% gringo</div>
+        </div>
+        <div class="about__text rv">
+          <span class="kicker" style="color:var(--pink-deep)">¿Quién es?</span>
+          <h2 class="display">Who's the Gringo<span class="script">Dominicano?</span></h2>
+          <p class="lead">
+            People look at me and assume I'm the gringo at the party. Then I grab the mic and switch to Spanish
+            mid-sentence, and the tías in the back start screaming. <strong>That's the whole point of me.</strong>
+          </p>
+          <p>
+            I grew up Dominican-American, going back and forth between English and Spanish, between merengue at
+            family parties and hip-hop in the car. I don't have to pick a side. On the mic that means everyone in
+            the room is in on it, whether that's your abuela, your clients, or a crowd of strangers at a
+            brand pop-up.
+          </p>
+          <p>
+            I've been doing this since I was thirteen: bedroom mixes, live streams, Las Olas clubs, residencies
+            around the country, and more than a thousand events. Every one of those rooms taught me the same
+            thing: read the people in front of you and never let the energy drop.
+          </p>
+          <div class="flags">
+            <svg viewBox="0 0 34 22" aria-label="Dominican Republic flag" role="img"><rect width="34" height="22" fill="#fff"/><rect width="14" height="8.5" fill="#002d62"/><rect x="20" width="14" height="8.5" fill="#ce1126"/><rect y="13.5" width="14" height="8.5" fill="#ce1126"/><rect x="20" y="13.5" width="14" height="8.5" fill="#002d62"/></svg>
+            <span>+</span>
+            <svg viewBox="0 0 34 22" aria-label="United States flag" role="img"><rect width="34" height="22" fill="#b22234"/>{[1,3,5,7,9,11].map((i) => <rect y={i * 1.7} width="34" height="1.7" fill="#fff" />)}<rect width="15" height="11.9" fill="#3c3b6e"/></svg>
+            <span>Raised on both</span>
           </div>
         </div>
       </div>
+
+      <div class="stats rv">
+        <div class="stat"><b>15+</b><span>years behind the decks</span></div>
+        <div class="stat"><b>1,000+</b><span>events played</span></div>
+        <div class="stat"><b>EN/ES</b><span>bilingual on the mic</span></div>
+        <div class="stat"><b>Weekly</b><span>residency at Hunters</span></div>
+      </div>
+
+      <div class="sec-head rv" style="margin-bottom:28px">
+        <span class="kicker">The short version</span>
+      </div>
+      <div class="timeline">
+        {CHAPTERS.map((c) => (
+          <article class="chapter rv">
+            <span class="chapter__yr">{c.yr}</span>
+            <h3>{c.h}</h3>
+            <p>{c.p}</p>
+          </article>
+        ))}
+      </div>
+      <div class="about__more rv">
+        <a class="btn btn--dark" href="/about">Read my whole story <Fragment set:html={I("arrow")} /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BRANDS ================= -->
+  <section class="section brands" id="brands">
+    <Frond class="f-brand" />
+    <div class="wrap">
+      <div class="brands__head rv">
+        <div>
+          <span class="kicker" style="color:var(--pink)">For brands, agencies & activations</span>
+          <h2 class="display h2" style="margin-top:16px">Your brand.<br /><span class="pink">My mic.</span><br />Everybody's watching.</h2>
+        </div>
+        <p class="lead">
+          You need more than background music at an activation. You need someone who pulls people in, keeps them
+          there, and makes them post about it. I've been doing that on stages, in clubs and on camera since I was a
+          kid, and I do it in two languages.
+        </p>
+      </div>
+
+      <div class="offer">
+        {OFFER.map((o) => (
+          <article class="offer__card rv">
+            <div class="offer__icon"><Fragment set:html={I(o.icon)} /></div>
+            <h3>{o.h}</h3>
+            <p>{o.p}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="usecases rv">
+        {USECASES.map((u) => <span>{u}</span>)}
+      </div>
+
+      <div class="logos rv">
+        <span class="kicker">Brands I've worked with</span>
+        <div class="logos__row">
+          {Array.from({ length: 6 }).map(() => <div class="logos__slot">Brand logo</div>)}
+        </div>
+      </div>
+
+      <div class="brands__cta rv">
+        <a class="btn btn--pink" href="/brands">How I work with brands <Fragment set:html={I("arrow")} /></a>
+        <a class="btn btn--ghost" href="/book?type=brand">Get a quote</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WEDDINGS + NIGHTLIFE ================= -->
+  <div class="stages">
+    <section class="stage stage--wed" id="weddings">
+      <div class="rv">
+        <span class="kicker">Weddings</span>
+        <h2 class="display">Your wedding<span class="script">la fiesta de tu vida</span></h2>
+        <p class="lead">
+          Weddings are where I built my name. I started Xpress Entertainment in 2016, and our team now plays
+          150+ weddings a year across South Florida.
+        </p>
+        <Shot ratio="16 / 10" src="/images/wedding-mic.jpg" label="Drew on the mic at a garden wedding" class="pos-top" />
+        <ul>
+          <li>Bilingual MC, so both sides of the family are in on every moment</li>
+          <li>Reggaetón, salsa, merengue, 2000s hip-hop, house: one floor, every generation</li>
+          <li>Ceremony, cocktail hour and reception run as one night</li>
+        </ul>
+        <a class="btn btn--dark" href="/weddings">Plan your wedding with me <Fragment set:html={I("arrow")} /></a>
+      </div>
     </section>
 
-    <!-- ================= TICKER ================= -->
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee__track">
-        {[0, 1].map(() => (
-          <div class="marquee__group">
-            {TICKER.map((t) => (<><span>{t}</span><span class="star">✦</span></>))}
-            <span class="es">¿Qué lo que?</span><span class="star">✦</span>
+    <section class="stage stage--night" id="nightlife">
+      <Frond class="f-night" />
+      <div class="rv">
+        <span class="kicker">Nightlife</span>
+        <h2 class="display">After dark<span class="script">hasta que salga el sol</span></h2>
+        <p class="lead">
+          I started in clubs on Las Olas at 18. Since then I've played LGBTQ+ venues across the country, and I
+          hold a weekly residency at Hunters Nightclub in Wilton Manors.
+        </p>
+        <Shot ratio="16 / 10" src="/images/nightlife-hunters.jpg" label="Drew on the decks at Hunters Nightclub, Wilton Manors" class="pos-top" />
+        <div class="venues">
+          <span class="res">Resident · Hunters, Wilton Manors</span>
+          {NIGHT_VENUES.map((v) => <span>{v}</span>)}
+        </div>
+        <a class="btn btn--pink" href="/nightlife">Nightlife & residencies <Fragment set:html={I("arrow")} /></a>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================= CONTENT ================= -->
+  <section class="section section--pink" id="content">
+    <div class="wrap">
+      <div class="content__head rv">
+        <div class="sec-head" style="margin:0">
+          <span class="kicker">Content creator</span>
+          <h2 class="display h2">Follow<br />the <span class="script">vibe</span></h2>
+        </div>
+        <div class="socials">
+          {SOCIALS.map((s) => (
+            <a class="social" href={s.href} target="_blank" rel="noopener">
+              <Fragment set:html={I(s.icon)} />{s.handle}
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="reels">
+        {REELS.map((r) => (
+          <div class="reel rv">
+            <Shot ratio="9 / 16" src={r.src} label={r.alt} />
+            <span class="reel__cap">{r.cap}</span>
           </div>
         ))}
       </div>
     </div>
+  </section>
 
-    <!-- ================= ABOUT ================= -->
-    <section class="section section--light" id="about">
-      <div class="wrap">
-        <div class="about__intro">
-          <div class="about__portrait rv">
-            <Shot ratio="4 / 5" src="/images/about-drew.jpg" label="Drew in a suit with DJ headphones on" />
-            <div class="about__tag">100% <b>Dominicano</b>, 100% gringo</div>
-          </div>
-          <div class="about__text rv">
-            <span class="kicker" style="color:var(--pink-deep)">¿Quién es?</span>
-            <h2 class="display">Who's the Gringo<span class="script">Dominicano?</span></h2>
-            <p class="lead">
-              People look at me and assume I'm the gringo at the party. Then I grab the mic and switch to Spanish
-              mid-sentence, and the tías in the back start screaming. <strong>That's the whole point of me.</strong>
-            </p>
-            <p>
-              I grew up Dominican-American, going back and forth between English and Spanish, between merengue at
-              family parties and hip-hop in the car. I don't have to pick a side. On the mic that means everyone in
-              the room is in on it, whether that's your abuela, your clients, or a crowd of strangers at a
-              brand pop-up.
-            </p>
-            <p>
-              I've been doing this since I was thirteen: bedroom mixes, live streams, Las Olas clubs, residencies
-              around the country, and more than a thousand events. Every one of those rooms taught me the same
-              thing: read the people in front of you and never let the energy drop.
-            </p>
-            <div class="flags">
-              <svg viewBox="0 0 34 22" aria-label="Dominican Republic flag" role="img"><rect width="34" height="22" fill="#fff"/><rect width="14" height="8.5" fill="#002d62"/><rect x="20" width="14" height="8.5" fill="#ce1126"/><rect y="13.5" width="14" height="8.5" fill="#ce1126"/><rect x="20" y="13.5" width="14" height="8.5" fill="#002d62"/></svg>
-              <span>+</span>
-              <svg viewBox="0 0 34 22" aria-label="United States flag" role="img"><rect width="34" height="22" fill="#b22234"/>{[1,3,5,7,9,11].map((i) => <rect y={i * 1.7} width="34" height="1.7" fill="#fff" />)}<rect width="15" height="11.9" fill="#3c3b6e"/></svg>
-              <span>Raised on both</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="stats rv">
-          <div class="stat"><b>15+</b><span>years behind the decks</span></div>
-          <div class="stat"><b>1,000+</b><span>events played</span></div>
-          <div class="stat"><b>EN/ES</b><span>bilingual on the mic</span></div>
-          <div class="stat"><b>Weekly</b><span>residency at Hunters</span></div>
-        </div>
-
-        <div class="sec-head rv" style="margin-bottom:28px">
-          <span class="kicker">The short version</span>
-        </div>
-        <div class="timeline">
-          {CHAPTERS.map((c) => (
-            <article class="chapter rv">
-              <span class="chapter__yr">{c.yr}</span>
-              <h3>{c.h}</h3>
-              <p>{c.p}</p>
-            </article>
-          ))}
-        </div>
-        <div class="about__more rv">
-          <a class="btn btn--dark" href="/about">Read my whole story <Fragment set:html={I("arrow")} /></a>
+  <!-- ================= BOOK ================= -->
+  <section class="section book" id="book">
+    <Frond class="f-book1 sway sway--slow" />
+    <Frond class="f-book2" />
+    <div class="wrap book__grid">
+      <div class="rv">
+        <h2 class="display"><span class="script">¿Qué lo que?</span>Let's work.</h2>
+        <p class="lead" style="margin-top:24px; color:rgba(255,246,250,.82)">
+          Tell me what you're planning: an activation, a launch, your club night, or your wedding.
+          I answer personally, usually the same day.
+        </p>
+        <div class="book__direct">
+          <a href={`sms:${CONTACT.phoneSms}`}><Fragment set:html={I("chat")} />Text me · {CONTACT.phoneDisplay}</a>
+          <a href={`tel:${CONTACT.phoneDial}`}><Fragment set:html={I("phone")} />Call · {CONTACT.phoneDisplay}</a>
+          <a href={`mailto:${CONTACT.email}`}><Fragment set:html={I("mail")} />{CONTACT.email}</a>
         </div>
       </div>
-    </section>
-
-    <!-- ================= BRANDS ================= -->
-    <section class="section brands" id="brands">
-      <Frond class="f-brand" />
-      <div class="wrap">
-        <div class="brands__head rv">
-          <div>
-            <span class="kicker" style="color:var(--pink)">For brands, agencies & activations</span>
-            <h2 class="display h2" style="margin-top:16px">Your brand.<br /><span class="pink">My mic.</span><br />Everybody's watching.</h2>
-          </div>
-          <p class="lead">
-            You need more than background music at an activation. You need someone who pulls people in, keeps them
-            there, and makes them post about it. I've been doing that on stages, in clubs and on camera since I was a
-            kid, and I do it in two languages.
-          </p>
-        </div>
-
-        <div class="offer">
-          {OFFER.map((o) => (
-            <article class="offer__card rv">
-              <div class="offer__icon"><Fragment set:html={I(o.icon)} /></div>
-              <h3>{o.h}</h3>
-              <p>{o.p}</p>
-            </article>
-          ))}
-        </div>
-
-        <div class="usecases rv">
-          {USECASES.map((u) => <span>{u}</span>)}
-        </div>
-
-        <div class="logos rv">
-          <span class="kicker">Brands I've worked with</span>
-          <div class="logos__row">
-            {Array.from({ length: 6 }).map(() => <div class="logos__slot">Brand logo</div>)}
-          </div>
-        </div>
-
-        <div class="brands__cta rv">
-          <a class="btn btn--pink" href="#book">Get a quote for your activation <Fragment set:html={I("arrow")} /></a>
-          <a class="btn btn--ghost" href="#content">See my content</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= WEDDINGS + NIGHTLIFE ================= -->
-    <div class="stages">
-      <section class="stage stage--wed" id="weddings">
-        <div class="rv">
-          <span class="kicker">Weddings</span>
-          <h2 class="display">Your wedding<span class="script">la fiesta de tu vida</span></h2>
-          <p class="lead">
-            Weddings are where I built my name. I started Xpress Entertainment in 2016, and our team now plays
-            150+ weddings a year across South Florida.
-          </p>
-          <Shot ratio="16 / 10" src="/images/wedding-mic.jpg" label="Drew on the mic at a garden wedding" class="pos-top" />
-          <ul>
-            <li>Bilingual MC, so both sides of the family are in on every moment</li>
-            <li>Reggaetón, salsa, merengue, 2000s hip-hop, house: one floor, every generation</li>
-            <li>Ceremony, cocktail hour and reception run as one night</li>
-          </ul>
-          <a class="btn btn--dark" href="/weddings">Plan your wedding with me <Fragment set:html={I("arrow")} /></a>
-        </div>
-      </section>
-
-      <section class="stage stage--night" id="nightlife">
-        <Frond class="f-night" />
-        <div class="rv">
-          <span class="kicker">Nightlife</span>
-          <h2 class="display">After dark<span class="script">hasta que salga el sol</span></h2>
-          <p class="lead">
-            I started in clubs on Las Olas at 18. Since then I've played LGBTQ+ venues across the country, and I
-            hold a weekly residency at Hunters Nightclub in Wilton Manors.
-          </p>
-          <Shot ratio="16 / 10" src="/images/nightlife-hunters.jpg" label="Drew on the decks at Hunters Nightclub, Wilton Manors" class="pos-top" />
-          <div class="venues">
-            <span class="res">Resident · Hunters, Wilton Manors</span>
-            {NIGHT_VENUES.map((v) => <span>{v}</span>)}
-          </div>
-          <a class="btn btn--pink" href="#book">Book me for your venue <Fragment set:html={I("arrow")} /></a>
-        </div>
-      </section>
+      <div class="rv"><LeadForm /></div>
     </div>
-
-    <!-- ================= CONTENT ================= -->
-    <section class="section section--pink" id="content">
-      <div class="wrap">
-        <div class="content__head rv">
-          <div class="sec-head" style="margin:0">
-            <span class="kicker">Content creator</span>
-            <h2 class="display h2">Follow<br />the <span class="script">vibe</span></h2>
-          </div>
-          <div class="socials">
-            {SOCIALS.map((s) => (
-              <a class="social" href={s.href} target="_blank" rel="noopener">
-                <Fragment set:html={I(s.icon)} />{s.handle}
-              </a>
-            ))}
-          </div>
-        </div>
-        <div class="reels">
-          {REELS.map((r) => (
-            <div class="reel rv">
-              <Shot ratio="9 / 16" src={r.src} label={r.alt} />
-              <span class="reel__cap">{r.cap}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= BOOK ================= -->
-    <section class="section book" id="book">
-      <Frond class="f-book1 sway sway--slow" />
-      <Frond class="f-book2" />
-      <div class="wrap book__grid">
-        <div class="rv">
-          <h2 class="display"><span class="script">¿Qué lo que?</span>Let's work.</h2>
-          <p class="lead" style="margin-top:24px; color:rgba(255,246,250,.82)">
-            Tell me what you're planning: an activation, a launch, your club night, or your wedding.
-            I answer personally, usually the same day.
-          </p>
-          <div class="book__direct">
-            <a href={`sms:${CONTACT.phoneSms}`}><Fragment set:html={I("chat")} />Text me · {CONTACT.phoneDisplay}</a>
-            <a href={`tel:${CONTACT.phoneDial}`}><Fragment set:html={I("phone")} />Call · {CONTACT.phoneDisplay}</a>
-            <a href={`mailto:${CONTACT.email}`}><Fragment set:html={I("mail")} />{CONTACT.email}</a>
-          </div>
-        </div>
-
-        <form class="form rv" id="book-form" novalidate>
-          <h3>Book Drew</h3>
-          <fieldset>
-            <legend>What are we doing?</legend>
-            <div class="types">
-              <label><input type="radio" name="type" value="brand" checked /><span>Brand / Activation</span></label>
-              <label><input type="radio" name="type" value="nightlife" /><span>Club / Venue</span></label>
-              <label><input type="radio" name="type" value="wedding" /><span>Wedding</span></label>
-              <label><input type="radio" name="type" value="other" /><span>Something else</span></label>
-            </div>
-          </fieldset>
-          <div class="row">
-            <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" /></div>
-            <div class="field"><label for="f-date">Date</label><input id="f-date" name="date" type="date" /></div>
-          </div>
-          <div class="row">
-            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" /></div>
-            <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" /></div>
-          </div>
-          <div class="field"><label for="f-msg">Tell me about it</label><textarea id="f-msg" name="message" placeholder="Brand, venue, crowd size, the vibe you want…"></textarea></div>
-          <button class="btn btn--pink" type="submit">Send it <Fragment set:html={I("arrow")} /></button>
-          <p id="form-note" style="margin:12px 0 0; font-size:13px; color:#7a5a6a" hidden>Mockup: this form isn't connected yet.</p>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer__big">Drew Segura <span class="script">El Gringo Dominicano</span></div>
-      <div class="footer__row">
-        <span>DJ · MC · Content Creator · Miami & Fort Lauderdale</span>
-        <div class="footer__links">
-          {SOCIALS.map((s) => <a href={s.href} target="_blank" rel="noopener">{s.label}</a>)}
-        </div>
-        <span>Founder, <a href={CONTACT.companyUrl}>{CONTACT.company}</a></span>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Mockup only: the lead form isn't wired to a backend yet.
-    document.getElementById("book-form")?.addEventListener("submit", (e) => {
-      e.preventDefault();
-      document.getElementById("form-note")?.removeAttribute("hidden");
-    });
-  </script>
+  </section>
 </Brand>

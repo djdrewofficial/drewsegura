@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "description": "DJ Drew Segura — Miami & Fort Lauderdale Wedding DJ. Editorial 'Wedding Mixtape' marketing site built with Astro.",
+  "description": "DJ Drew Segura, El Gringo Dominicano: DJ, MC & content creator. Astro site on Cloudflare Pages.",
   "scripts": {
     "dev": "astro dev --port 4340",
     "start": "astro dev --port 4340",
