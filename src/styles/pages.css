@@ -176,3 +176,22 @@ a.chip:hover { background: var(--noche); color: var(--pink); }
 
 /* script words inside big display headings */
 .h2 .script { font-size: .7em; }
+
+/* reel tiles (TikTok / Instagram) + player dialog */
+a.reel { display: block; aspect-ratio: 9 / 16; border-radius: 16px; overflow: hidden; border: 3px solid var(--noche); background: var(--noche); color: var(--blanco); text-decoration: none; }
+a.reel img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+a.reel:hover img { transform: scale(1.04); }
+a.reel:focus-visible { outline: 3px solid var(--mango); outline-offset: 3px; }
+a.reel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(19, 8, 26, .7), transparent 45%); pointer-events: none; }
+.reel__badge { position: absolute; z-index: 1; left: 10px; top: 10px; display: inline-flex; gap: 6px; align-items: center; background: rgba(19, 8, 26, .78); color: var(--blanco); font-weight: 800; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; }
+.reel__badge svg { width: 14px; height: 14px; }
+a.reel .reel__play { z-index: 1; background: var(--pink); color: var(--noche); transition: transform .2s; }
+a.reel:hover .reel__play { transform: scale(1.1); }
+a.reel .reel__cap { z-index: 1; }
+.reel-modal { padding: 0; border: 0; background: transparent; max-width: none; max-height: none; }
+.reel-modal::backdrop { background: rgba(19, 8, 26, .88); backdrop-filter: blur(4px); }
+.reel-modal__box { position: relative; width: min(92vw, 400px); height: min(86vh, 740px); background: #fff; border-radius: 18px; overflow: hidden; box-shadow: 10px 10px 0 var(--pink); }
+.reel-modal__box iframe { width: 100%; height: calc(100% - 46px); border: 0; display: block; }
+.reel-modal__open { display: grid; place-items: center; height: 46px; background: var(--noche); color: var(--pink); font-weight: 800; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; }
+.reel-modal__close { position: absolute; top: 8px; right: 8px; z-index: 2; width: 38px; height: 38px; border-radius: 50%; border: 0; background: var(--noche); color: var(--blanco); font-size: 24px; line-height: 1; cursor: pointer; }
+.reel-modal__close:focus-visible { outline: 3px solid var(--mango); outline-offset: 2px; }

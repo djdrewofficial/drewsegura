@@ -48,6 +48,25 @@ export const BRANDS: { name: string; logo?: string }[] = [
   { name: "VITAS Healthcare", logo: "/images/brands/vitas-healthcare.png" },
 ];
 
+// Featured reels on the homepage "Follow the vibe" grid. Covers live in public/images/reels/.
+export const REELS: { platform: "tiktok" | "instagram"; url: string; embed: string; thumb: string; cap: string }[] = [
+  { platform: "tiktok", cap: "El Tao Tao",
+    url: "https://www.tiktok.com/@djdrewofficiall/video/7521451275133668639",
+    embed: "https://www.tiktok.com/embed/v2/7521451275133668639", thumb: "/images/reels/tt-el-tao-tao.jpg" },
+  { platform: "tiktok", cap: "Mi gente latina",
+    url: "https://www.tiktok.com/@djdrewofficiall/video/7667323693571263774",
+    embed: "https://www.tiktok.com/embed/v2/7667323693571263774", thumb: "/images/reels/tt-gente-latina.jpg" },
+  { platform: "instagram", cap: "Crazy in Love mashup",
+    url: "https://www.instagram.com/reel/Dc1QeDBx4iN/",
+    embed: "https://www.instagram.com/reel/Dc1QeDBx4iN/embed/", thumb: "/images/reels/ig-crazy-in-love.jpg" },
+  { platform: "instagram", cap: "A little fun",
+    url: "https://www.instagram.com/reel/DccWkYfRUOK/",
+    embed: "https://www.instagram.com/reel/DccWkYfRUOK/embed/", thumb: "/images/reels/ig-little-fun.jpg" },
+  { platform: "instagram", cap: "Lady, at Hunters",
+    url: "https://www.instagram.com/reel/Da_pwGDx0QU/",
+    embed: "https://www.instagram.com/reel/Da_pwGDx0QU/embed/", thumb: "/images/reels/ig-hunters-modjo.jpg" },
+];
+
 export const EVENT_TYPES = [
   { value: "brand", label: "Brand / Activation" },
   { value: "nightlife", label: "Club / Venue" },

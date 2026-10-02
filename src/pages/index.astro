@@ -4,6 +4,7 @@ import Frond from "../components/Frond.astro";
 import Shot from "../components/Shot.astro";
 import BrandLogos from "../components/BrandLogos.astro";
 import LeadForm from "../components/LeadForm.astro";
+import ReelGrid from "../components/ReelGrid.astro";
 import { CONTACT, SOCIALS, NIGHT_VENUES } from "../lib/site";
 import { icon as I } from "../lib/icons";
 
@@ -25,13 +26,6 @@ const OFFER = [
 
 const USECASES = ["Brand activations", "Product launches", "Pop-ups", "Store openings", "Festivals", "Corporate events", "Sports & halftime", "Galas", "Social campaigns"];
 
-const REELS = [
-  { src: "/images/reel-podcast.jpg", cap: "On camera", alt: "Drew hosting a podcast interview on the Xpress set" },
-  { src: "/images/reel-booth.jpg", cap: "In the booth", alt: "Drew in the DJ booth before a club set" },
-  { src: "/images/reel-wedding.jpg", cap: "Running the floor", alt: "Drew on the mic in the middle of a wedding dance floor" },
-  { src: "/images/reel-outdoor.jpg", cap: "Any room, any vibe", alt: "Drew smiling behind the decks at an outdoor night event" },
-  { src: "/images/reel-decks.jpg", cap: "Behind the decks", alt: "Drew smiling behind his DJ setup at a wedding" },
-];
 ---
 <Brand>
   <!-- ================= HERO ================= -->
@@ -233,14 +227,7 @@ const REELS = [
           ))}
         </div>
       </div>
-      <div class="reels">
-        {REELS.map((r) => (
-          <div class="reel rv">
-            <Shot ratio="9 / 16" src={r.src} label={r.alt} />
-            <span class="reel__cap">{r.cap}</span>
-          </div>
-        ))}
-      </div>
+      <ReelGrid />
     </div>
   </section>
 

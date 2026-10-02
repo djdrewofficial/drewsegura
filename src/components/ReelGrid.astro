@@ -1,0 +1,52 @@
+---
+import { REELS } from "../lib/site";
+import { icon } from "../lib/icons";
+/**
+ * Featured TikTok / Instagram reels. Each tile is a real link to the post;
+ * with JS, clicking opens the platform's embed player in a dialog instead.
+ */
+const label = { tiktok: "TikTok", instagram: "Instagram" } as const;
+---
+<div class="reels">
+  {REELS.map((r) => (
+    <a class="reel rv" href={r.url} target="_blank" rel="noopener" data-embed={r.embed} data-platform={r.platform}
+       aria-label={`Watch "${r.cap}" on ${label[r.platform]}`}>
+      <img src={r.thumb} alt="" loading="lazy" width="540" height="960" />
+      <span class="reel__badge"><Fragment set:html={icon(r.platform === "tiktok" ? "tt" : "ig")} />{label[r.platform]}</span>
+      <span class="reel__play" aria-hidden="true"><Fragment set:html={icon("play")} /></span>
+      <span class="reel__cap">{r.cap}</span>
+    </a>
+  ))}
+</div>
+
+<dialog class="reel-modal" aria-label="Video player">
+  <div class="reel-modal__box">
+    <button class="reel-modal__close" type="button" aria-label="Close video">×</button>
+    <iframe title="Video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+    <a class="reel-modal__open" target="_blank" rel="noopener">Open in app ↗</a>
+  </div>
+</dialog>
+
+<script>
+  const modal = document.querySelector<HTMLDialogElement>(".reel-modal");
+  const frame = modal?.querySelector("iframe");
+  const open = modal?.querySelector<HTMLAnchorElement>(".reel-modal__open");
+  const close = () => { modal?.close(); };
+
+  if (modal && frame && open && typeof modal.showModal === "function") {
+    document.querySelectorAll<HTMLAnchorElement>(".reel[data-embed]").forEach((a) => {
+      a.addEventListener("click", (e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return; // let new-tab clicks through
+        e.preventDefault();
+        frame.src = a.dataset.embed!;
+        modal.dataset.platform = a.dataset.platform;
+        open.href = a.href;
+        open.textContent = `Open on ${a.dataset.platform === "tiktok" ? "TikTok" : "Instagram"} ↗`;
+        modal.showModal();
+      });
+    });
+    modal.querySelector(".reel-modal__close")?.addEventListener("click", close);
+    modal.addEventListener("click", (e) => { if (e.target === modal) close(); });
+    modal.addEventListener("close", () => { frame.src = "about:blank"; });
+  }
+</script>
