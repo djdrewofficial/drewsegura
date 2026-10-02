@@ -4,6 +4,7 @@ import PageHero from "../components/PageHero.astro";
 import BookBand from "../components/BookBand.astro";
 import Faq from "../components/Faq.astro";
 import Shot from "../components/Shot.astro";
+import BrandLogos from "../components/BrandLogos.astro";
 import { BRAND_FAQS } from "../lib/site";
 import { icon } from "../lib/icons";
 
@@ -106,12 +107,7 @@ const usecases = ["Brand activations", "Product launches", "Pop-ups", "Store ope
       <div class="usecases rv" style="margin-top:56px">
         {usecases.map((u) => <span>{u}</span>)}
       </div>
-      <div class="logos rv">
-        <span class="kicker">Brands I've worked with</span>
-        <div class="logos__row">
-          {Array.from({ length: 6 }).map(() => <div class="logos__slot">Brand logo</div>)}
-        </div>
-      </div>
+      <BrandLogos />
     </div>
   </section>
 

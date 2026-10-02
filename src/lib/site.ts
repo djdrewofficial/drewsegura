@@ -39,6 +39,15 @@ export const GENRES = [
 
 export const NIGHT_VENUES = ["Vibe Las Olas", "American Social", "The Manor", "Scorpio", "Rumors", "Johnsons", "Leboy"];
 
+// "Brands I've worked with". Add logo: "/images/brands/<file>.svg" to show a real logo.
+export const BRANDS: { name: string; logo?: string }[] = [
+  { name: "Big Gay Cruise" },
+  { name: "Hunters Nightclub" },
+  { name: "DRV PNK Stadium" },
+  { name: "El Car Wash" },
+  { name: "VITAS Healthcare" },
+];
+
 export const EVENT_TYPES = [
   { value: "brand", label: "Brand / Activation" },
   { value: "nightlife", label: "Club / Venue" },

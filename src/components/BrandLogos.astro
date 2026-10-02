@@ -1,0 +1,17 @@
+---
+import { BRANDS } from "../lib/site";
+/**
+ * "Brands I've worked with" row. Shows each brand as a styled wordmark;
+ * add `logo` (a /images/brands/... path) to a BRANDS entry to show the real logo instead.
+ */
+---
+<div class="logos rv">
+  <span class="kicker">Brands I've worked with</span>
+  <ul class="logos__row">
+    {BRANDS.map((b) => (
+      <li class="logos__slot">
+        {b.logo ? <img src={b.logo} alt={b.name} loading="lazy" /> : <span class="logos__name">{b.name}</span>}
+      </li>
+    ))}
+  </ul>
+</div>

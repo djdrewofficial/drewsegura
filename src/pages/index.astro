@@ -2,6 +2,7 @@
 import Brand from "../layouts/Brand.astro";
 import Frond from "../components/Frond.astro";
 import Shot from "../components/Shot.astro";
+import BrandLogos from "../components/BrandLogos.astro";
 import LeadForm from "../components/LeadForm.astro";
 import { CONTACT, SOCIALS, NIGHT_VENUES } from "../lib/site";
 import { icon as I } from "../lib/icons";
@@ -168,12 +169,7 @@ const REELS = [
         {USECASES.map((u) => <span>{u}</span>)}
       </div>
 
-      <div class="logos rv">
-        <span class="kicker">Brands I've worked with</span>
-        <div class="logos__row">
-          {Array.from({ length: 6 }).map(() => <div class="logos__slot">Brand logo</div>)}
-        </div>
-      </div>
+      <BrandLogos />
 
       <div class="brands__cta rv">
         <a class="btn btn--pink" href="/brands">How I work with brands <Fragment set:html={I("arrow")} /></a>
