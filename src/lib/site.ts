@@ -39,13 +39,13 @@ export const GENRES = [
 
 export const NIGHT_VENUES = ["Vibe Las Olas", "American Social", "The Manor", "Scorpio", "Rumors", "Johnsons", "Leboy"];
 
-// "Brands I've worked with". Add logo: "/images/brands/<file>.svg" to show a real logo.
+// "Brands I've worked with". Logos: white-on-transparent PNGs in public/images/brands/ (keep them uniform).
 export const BRANDS: { name: string; logo?: string }[] = [
-  { name: "Big Gay Cruise" },
-  { name: "Hunters Nightclub" },
-  { name: "DRV PNK Stadium" },
-  { name: "El Car Wash" },
-  { name: "VITAS Healthcare" },
+  { name: "Big Gay Cruise", logo: "/images/brands/big-gay-cruise.png" },
+  { name: "Hunters Nightclub", logo: "/images/brands/hunters-nightclub.png" },
+  { name: "DRV PNK Stadium", logo: "/images/brands/drv-pnk-stadium.png" },
+  { name: "El Car Wash", logo: "/images/brands/el-car-wash.png" },
+  { name: "VITAS Healthcare", logo: "/images/brands/vitas-healthcare.png" },
 ];
 
 export const EVENT_TYPES = [
